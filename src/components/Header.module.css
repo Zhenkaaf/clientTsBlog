@@ -1,0 +1,151 @@
+.header {
+    background-color: var(--color-header-bg);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
+}
+.header__container {
+    min-height: var(--header-height);
+}
+
+.header__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    min-height: var(--header-height);
+    padding: 0 15px;
+}
+
+.burger {
+    display: none;
+}
+
+.menu {
+}
+
+.menu__list {
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.menu__item {
+}
+
+.menu__link {
+    transition-duration: 0.3s;
+    padding: 0 15px;
+    min-height: var(--header-height);
+    color: #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.menu__link:hover {
+    background-color: #fff3;
+    color: #fff;
+}
+.menu__linkActive {
+    color: var(--color-primary);
+}
+/***************************************************************************/
+@media (max-width: 768px) {
+    .header__container {
+        position: fixed;
+        width: 100%;
+    }
+    .burger {
+        position: relative;
+        z-index: 5;
+        display: block;
+        width: 30px;
+        height: 18px;
+        cursor: pointer;
+    }
+    .burger span,
+    .burger::before,
+    .burger::after {
+        left: 0;
+        position: absolute;
+        height: 10%;
+        width: 100%;
+        transition-duration: 0.3s;
+        background-color: #ccc;
+    }
+    .burger::before {
+        content: "";
+        top: 0;
+    }
+    .burger::after {
+        content: "";
+        bottom: 0;
+    }
+    .burger span {
+        top: 50%;
+        transform: scale(1) translate(0px, -50%);
+    }
+    /********************************крестик иконки меню*********************************/
+    .burger._active span {
+        transform: scale(0) translate(0px, -50%);
+    }
+    .burger._active::before {
+        top: 50%;
+        transform: rotate(-45deg) translate(0px, -50%);
+        background-color: var(--color-primary);
+    }
+    .burger._active::after {
+        bottom: 50%;
+        transform: rotate(45deg) translate(0px, 50%);
+        background-color: var(--color-primary);
+    }
+    /********************************крестик иконки меню*********************************/
+
+    .header__logo {
+        z-index: 5;
+        position: relative;
+    }
+    .menu {
+        flex-direction: column;
+        text-align: center;
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-body-bg);
+        padding: 80px 20px 20px 20px;
+        transition-duration: 0.3s;
+        overflow: auto;
+    }
+    .menu._active {
+        top: 0;
+    }
+
+    .menu::before {
+        content: "";
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        min-height: var(--header-height);
+        background-color: var(--color-header-bg);
+        z-index: 2;
+    }
+
+    .menu__list {
+        flex-direction: column;
+        font-size: 22px;
+    }
+}
+
+/***************************************************************/

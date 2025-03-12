@@ -1,0 +1,94 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+ul,
+ol,
+li {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+:root {
+    --color-body-bg: #171717;
+    --color-header-bg: #000;
+    --color-primary: #c03;
+    --header-height: 60px;
+}
+html,
+body {
+    height: 100%;
+    line-height: 1;
+    font-size: 16px;
+    font-family: "Comic Neue", Arial, Helvetica, sans-serif;
+    background-color: var(--color-body-bg);
+    color: #fffffff2;
+}
+body._lock {
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.main {
+    flex: 1 1 auto;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 15px;
+    /*  border: 1px solid red; */
+}
+.link {
+    color: #fffffff2;
+}
+.footer {
+    background-color: antiquewhite;
+}
+
+/*     --theme-page: #171717;
+    --theme-page-modal: #000;
+    --theme-page-modal-shadow: #111;
+    --theme-page-modal-bg: #080808f2;
+    --theme-card: #222;
+    --theme-primary-card: #222;
+    --theme-secondary-card: #333;
+    --theme-tappable: #ffffff26;
+    --theme-delimiter: #ffffff26;
+    --theme-hover: #fff3;
+    --theme-hover-card: #ffffff14;
+    --theme-primary: #fffffff2;
+    --theme-primary-inv: #333;
+    --theme-secondary: #ffffff80;
+    --theme-secondary-offset: #fffffe80;
+    --theme-tertiary: #fff3;
+    --theme-secondary-icon: #ffffff80;
+    --theme-disabled: #ffffff4d;
+    --theme-disabled-opacity: .6;
+    --theme-symbols-hover: #fff; */
