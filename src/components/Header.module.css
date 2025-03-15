@@ -1,9 +1,8 @@
 .header {
     background-color: var(--color-header-bg);
     box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
-}
-.header__container {
     min-height: var(--header-height);
+    margin-bottom: 10px;
 }
 
 .header__body {
@@ -60,10 +59,16 @@
 }
 /***************************************************************************/
 @media (max-width: 768px) {
-    .header__container {
+    .header__body {
         position: fixed;
+        background-color: aqua;
+        top: 0;
+        left: 0;
         width: 100%;
+        background-color: var(--color-header-bg);
+        padding: 0 15px;
     }
+
     .burger {
         position: relative;
         z-index: 5;

@@ -5,7 +5,7 @@ export const Layout = () => {
     return (
         <div className="wrapper">
             <Header />
-            <div className="container">
+            <div className="main">
                 <Outlet />
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.

@@ -21,7 +21,7 @@ export const Header = () => {
     return (
         <>
             <header className={s.header}>
-                <div className={`container ${s.header__container}`}>
+                <div className="container">
                     <div className={s.header__body}>
                         <div className={s.header__logo}>
                             <Link to="/" className="link">
