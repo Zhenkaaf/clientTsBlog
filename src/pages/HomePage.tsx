@@ -1,9 +1,9 @@
+import PopularPosts from "../components/PopularPosts";
 import TypingText from "../components/TypingText";
 
 const HomePage = () => {
     return (
         <div>
-            ntrcn
             <TypingText
                 texts={[
                     "What makes your car special? Share your story!",
@@ -14,6 +14,7 @@ const HomePage = () => {
                 speed={50}
                 pause={3000}
             />
+            <PopularPosts />
         </div>
     );
 };

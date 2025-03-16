@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import s from "./TypingText.module.css";
 
 interface TypingTextProps {
     texts: string[];
@@ -51,10 +52,13 @@ const TypingText = ({ texts, speed = 50, pause = 3000 }: TypingTextProps) => {
     }, [charIndex, isDeleting, textIndex, texts, speed, pause]);
 
     return (
-        <span>
-            {texts[textIndex].slice(0, charIndex)}
-            {showCursor && "_"}
-        </span>
+        <section className={`${s.typing} container`}>
+            <div className={s.typing__body}>
+                <span>Welcome to the AUTOVIBE blog!</span>{" "}
+                {texts[textIndex].slice(0, charIndex)}
+                {showCursor && "_"}
+            </div>
+        </section>
     );
 };
 

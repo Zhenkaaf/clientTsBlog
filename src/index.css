@@ -28,8 +28,11 @@ h6 {
 }
 :root {
     --color-body-bg: #171717;
+    --color-card-bg: #222;
     --color-header-bg: #000;
     --color-primary: #c03;
+    --color-placeholder: #ffffff4d;
+
     --header-height: 60px;
 }
 html,
@@ -72,6 +75,8 @@ body._lock {
     background-color: antiquewhite;
 }
 
+/**********************************************************/
+
 /*     --theme-page: #171717;
     --theme-page-modal: #000;
     --theme-page-modal-shadow: #111;
@@ -92,3 +97,70 @@ body._lock {
     --theme-disabled: #ffffff4d;
     --theme-disabled-opacity: .6;
     --theme-symbols-hover: #fff; */
+
+.popular-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* .post {
+    position: relative;
+    overflow: hidden;
+}
+
+.post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+.post-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.post-date {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.post-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Левая колонка (большой пост) */
+.post-large {
+    grid-row: span 2;
+}
+
+/* Правая колонка */
+.posts-right {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Верхняя строка в правой колонке (широкий пост) */
+.post-wide {
+    width: 100%;
+}
+
+/* Нижняя строка с 2 маленькими постами */
+.posts-small {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Маленькие посты */
+.post-small {
+    height: 100%;
+}
