@@ -1,6 +1,6 @@
 .header {
     background-color: var(--color-header-bg);
-    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 4px 10px var(--color-shadow);
     min-height: var(--header-height);
     margin-bottom: 10px;
 }
@@ -16,11 +16,14 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
     display: flex;
     align-items: center;
     min-height: var(--header-height);
     padding: 0 15px;
+}
+.header__logoLink:hover {
+    color: #fff;
 }
 
 .burger {
@@ -45,7 +48,6 @@
     transition-duration: 0.3s;
     padding: 0 15px;
     min-height: var(--header-height);
-    color: #ccc;
     display: flex;
     align-items: center;
 }
@@ -55,13 +57,12 @@
     color: #fff;
 }
 .menu__linkActive {
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 /***************************************************************************/
 @media (max-width: 768px) {
     .header__body {
         position: fixed;
-        background-color: aqua;
         top: 0;
         left: 0;
         width: 100%;
@@ -85,7 +86,7 @@
         height: 10%;
         width: 100%;
         transition-duration: 0.3s;
-        background-color: #ccc;
+        background-color: var(--color-primary);
     }
     .burger::before {
         content: "";
@@ -106,12 +107,12 @@
     .burger._active::before {
         top: 50%;
         transform: rotate(-45deg) translate(0px, -50%);
-        background-color: var(--color-primary);
+        background-color: var(--color-secondary);
     }
     .burger._active::after {
         bottom: 50%;
         transform: rotate(45deg) translate(0px, 50%);
-        background-color: var(--color-primary);
+        background-color: var(--color-secondary);
     }
     /********************************крестик иконки меню*********************************/
 

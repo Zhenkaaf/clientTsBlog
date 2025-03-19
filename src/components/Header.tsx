@@ -24,7 +24,10 @@ export const Header = () => {
                 <div className="container">
                     <div className={s.header__body}>
                         <div className={s.header__logo}>
-                            <Link to="/" className="link">
+                            <Link
+                                to="/"
+                                className={`${s.header__logoLink} link`}
+                            >
                                 AutoVibe
                             </Link>
                         </div>

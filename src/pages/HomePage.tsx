@@ -1,4 +1,5 @@
 import PopularPosts from "../components/PopularPosts";
+import Posts from "../components/Posts";
 import TypingText from "../components/TypingText";
 
 const HomePage = () => {
@@ -15,6 +16,7 @@ const HomePage = () => {
                 pause={3000}
             />
             <PopularPosts />
+            <Posts />
         </div>
     );
 };

@@ -28,11 +28,12 @@ h6 {
 }
 :root {
     --color-body-bg: #171717;
-    --color-card-bg: #222;
+    --color-card-bg: #333;
     --color-header-bg: #000;
-    --color-primary: #c03;
+    --color-secondary: #c03;
     --color-placeholder: #ffffff4d;
-
+    --color-primary: #ccc;
+    --color-shadow: rgba(255, 0, 0, 0.2);
     --header-height: 60px;
 }
 html,
@@ -42,7 +43,7 @@ body {
     font-size: 16px;
     font-family: "Comic Neue", Arial, Helvetica, sans-serif;
     background-color: var(--color-body-bg);
-    color: #fffffff2;
+    color: var(--color-primary);
 }
 body._lock {
     overflow: hidden;
@@ -69,8 +70,10 @@ body._lock {
     /*  border: 1px solid red; */
 }
 .link {
-    color: #fffffff2;
+    transition-duration: 0.3s;
+    color: var(--color-primary);
 }
+
 .footer {
     background-color: antiquewhite;
 }

@@ -3,7 +3,31 @@
     margin: 20px 0px 30px 0px;
     background-color: var(--color-card-bg);
     padding: 10px 15px;
+    white-space: nowrap; /* Текст не переносится */
+    overflow: hidden; /* Скрывает выходящий текст */
+    text-overflow: ellipsis; /* Добавляет "..." */
+    max-width: 100%; /* Ограничивает ширину блока */
+    display: block; /* Убеждаемся, что ширина применяется */
 }
+
 .typing__body span {
     color: var(--color-placeholder);
+    display: inline-block; /* Важно для работы ellipsis */
+    max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .typing__body {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .typing__body {
+        font-size: 18px;
+    }
+
+    .typing__body span {
+        display: none;
+    }
 }
