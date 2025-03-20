@@ -1,0 +1,68 @@
+.register {
+    margin-top: 20px;
+}
+
+.register__form {
+    background-color: var(--color-card-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+.register__title {
+    font-size: 32px;
+    text-align: center;
+}
+.register__input {
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid #ffffff80;
+    outline: none;
+    color: var(--color-primary);
+    font-size: 16px;
+}
+.register__input:focus {
+    border-color: var(--color-button);
+}
+.register__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-card-bg) inset !important;
+    -webkit-text-fill-color: var(--color-primary) !important;
+    border: 1px solid var(--color-button) !important;
+}
+
+.register__button {
+    background-color: var(--color-button);
+    padding: 10px;
+    color: var(--color-primary);
+    font-size: 16px;
+    font-weight: 600;
+    transition-duration: 0.3s;
+}
+.register__button:hover {
+    background-color: rgb(77, 77, 250);
+}
+.register__button:disabled {
+    background-color: var(--color-placeholder);
+}
+.register__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.register__link {
+    color: var(--color-button);
+    transition-duration: 0.3s;
+}
+.register__link:hover {
+    text-decoration: underline;
+}
+.register__error {
+    color: red;
+    font-size: 14px;
+    margin-top: -15px;
+}

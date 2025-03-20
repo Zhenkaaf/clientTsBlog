@@ -33,6 +33,7 @@ h6 {
     --color-secondary: #c03;
     --color-placeholder: #ffffff4d;
     --color-primary: #ccc;
+    --color-button: #47c;
     --color-shadow: rgba(255, 0, 0, 0.2);
     --header-height: 60px;
 }
@@ -72,6 +73,17 @@ body._lock {
 .link {
     transition-duration: 0.3s;
     color: var(--color-primary);
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 .footer {
