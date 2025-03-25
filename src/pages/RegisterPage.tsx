@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import s from "./RegisterPage.module.css";
 import { useForm } from "react-hook-form";
-
-interface IFormInputs {
-    email: string;
-    password: string;
-}
+import { IFormInputs } from "../types";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { registerUser } from "../redux/auth/authSlice";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
     const {
@@ -15,9 +14,22 @@ const RegisterPage = () => {
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onBlur" });
 
-    const processFormData = (data: IFormInputs) => {
-        console.log(data);
-        reset();
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector((state) => state.auth.isLoading);
+    const navigate = useNavigate();
+
+    const processFormData = async (data: IFormInputs) => {
+        const toastId = toast.loading("Registering...");
+        try {
+            const res = await dispatch(registerUser(data)).unwrap();
+            toast.success(`${res.message}`, { id: toastId });
+            reset();
+            navigate("/");
+        } catch (err: any) {
+            toast.dismiss(toastId);
+            toast.error(err, { id: toastId });
+            console.error("Registration error:", err);
+        }
     };
     return (
         <div className={s.register}>
@@ -45,7 +57,7 @@ const RegisterPage = () => {
                     />
                     {errors?.email && (
                         <p className={s.register__error}>
-                            {errors.email?.message || "Error"}
+                            {errors.email?.message || "Please check the field"}
                         </p>
                     )}
 
@@ -75,15 +87,16 @@ const RegisterPage = () => {
                     />
                     {errors?.password && (
                         <p className={s.register__error}>
-                            {errors.password?.message || "Error"}
+                            {errors.password?.message ||
+                                "Please check the field"}
                         </p>
                     )}
                     <button
                         className={s.register__button}
                         type="submit"
-                        disabled={!isValid}
+                        disabled={!isValid || isLoading}
                     >
-                        register
+                        Register
                     </button>
 
                     <div className={s.register__footer}>

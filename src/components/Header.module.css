@@ -11,6 +11,10 @@
     justify-content: space-between;
 }
 
+.header__left {
+    display: flex;
+    align-items: center;
+}
 .header__logo {
     font-size: 24px;
     font-weight: 700;
@@ -22,8 +26,32 @@
     min-height: var(--header-height);
     padding: 0 15px;
 }
-.header__logoLink:hover {
+.header__logo:hover {
     color: #fff;
+    cursor: pointer;
+}
+
+.header__user {
+    padding: 0 15px;
+    min-height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.header__user:hover {
+    background-color: var(--color-hover);
+}
+.header__user img {
+    width: 60px;
+}
+.header__user span {
+    position: absolute;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .burger {
@@ -53,7 +81,7 @@
 }
 
 .menu__link:hover {
-    background-color: #fff3;
+    background-color: var(--color-hover);
     color: #fff;
 }
 .menu__linkActive {
@@ -63,6 +91,8 @@
 @media (max-width: 768px) {
     .header__body {
         position: fixed;
+        z-index: 2;
+        background-color: aqua;
         top: 0;
         left: 0;
         width: 100%;
@@ -72,7 +102,7 @@
 
     .burger {
         position: relative;
-        z-index: 5;
+        z-index: 20;
         display: block;
         width: 30px;
         height: 18px;
@@ -117,7 +147,7 @@
     /********************************крестик иконки меню*********************************/
 
     .header__logo {
-        z-index: 5;
+        z-index: 3;
         position: relative;
     }
     .menu {
@@ -135,6 +165,7 @@
     }
     .menu._active {
         top: 0;
+        z-index: 2; /* ************************** */
     }
 
     .menu::before {

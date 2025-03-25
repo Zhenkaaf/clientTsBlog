@@ -8,7 +8,7 @@ const PopularPosts = () => {
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            src="https://i.pinimg.com/736x/7e/1f/52/7e1f5204cd468f3708679dbb2ce9e894.jpg"
+                            src="https://a.d-cd.net/fF_9ImAA9Tq13W5FKVfVidI4lb8-1920.jpg"
                             alt="Post Image"
                         />
                     </div>
@@ -25,7 +25,7 @@ const PopularPosts = () => {
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            src="https://i.pinimg.com/736x/9c/3d/9f/9c3d9f577fc5ee701ca0eec6096d51fe.jpg"
+                            src="https://a.d-cd.net/UAAAAgBGaeA-960.jpg"
                             alt="Post Image"
                         />
                     </div>
@@ -57,7 +57,7 @@ const PopularPosts = () => {
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            src="https://i.pinimg.com/736x/39/2e/2b/392e2b35eb97313a59f50b5cf2eb020d.jpg"
+                            src="https://i.pinimg.com/736x/7e/1f/52/7e1f5204cd468f3708679dbb2ce9e894.jpg"
                             alt="Post Image"
                         />
                     </div>
