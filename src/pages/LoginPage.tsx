@@ -3,7 +3,11 @@ import s from "./LoginPage.module.css";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { loginUser } from "../redux/auth/authSlice";
+import {
+    loginUser,
+    resetEmailError,
+    resetPasswordError,
+} from "../redux/auth/authSlice";
 
 interface IFormInputs {
     email: string;
@@ -15,26 +19,28 @@ const LoginPage = () => {
         register,
         handleSubmit,
         reset,
+        clearErrors,
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onBlur" });
 
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.auth.isLoading);
+    const emailErrTxt = useAppSelector((state) => state.auth.emailErrTxt);
+    const passwordErrTxt = useAppSelector((state) => state.auth.passwordErrTxt);
     const navigate = useNavigate();
 
     const processFormData = async (data: IFormInputs) => {
-        const toastId = toast.loading("Logging in...");
         try {
             const res = await dispatch(loginUser(data)).unwrap();
-            toast.success(`${res.message}`, { id: toastId });
+            toast.success(`${res.message}`);
             reset();
             navigate("/");
         } catch (err: any) {
-            toast.dismiss(toastId);
-            toast.error(err, { id: toastId });
+            toast.error(err[Object.keys(err)[0]]);
             console.error("Login error:", err);
         }
     };
+
     return (
         <div className={s.login}>
             <div className="container">
@@ -57,11 +63,19 @@ const LoginPage = () => {
                                 value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}$/,
                                 message: "Enter a valid email address",
                             },
+                            onChange: () => {
+                                if (emailErrTxt) {
+                                    dispatch(resetEmailError());
+                                    clearErrors("email");
+                                }
+                            },
                         })}
                     />
-                    {errors?.email && (
+                    {(errors?.email || emailErrTxt) && (
                         <p className={s.login__error}>
-                            {errors.email?.message || "Please check the field"}
+                            {errors.email?.message ||
+                                emailErrTxt ||
+                                "Please check the field"}
                         </p>
                     )}
 
@@ -87,11 +101,18 @@ const LoginPage = () => {
                                 value: /^\S*$/,
                                 message: "Password can not contain spaces",
                             },
+                            onChange: () => {
+                                if (passwordErrTxt) {
+                                    dispatch(resetPasswordError());
+                                    clearErrors("password");
+                                }
+                            },
                         })}
                     />
-                    {errors?.password && (
+                    {(errors?.password || passwordErrTxt) && (
                         <p className={s.login__error}>
                             {errors.password?.message ||
+                                passwordErrTxt ||
                                 "Please check the field"}
                         </p>
                     )}

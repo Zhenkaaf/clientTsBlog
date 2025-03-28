@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 .header__user:hover {
@@ -46,6 +46,11 @@
 }
 .header__user img {
     width: 60px;
+}
+.header__userSVG {
+    width: var(--header-height);
+    height: var(--header-height);
+    fill: var(--color-secondary);
 }
 .header__user span {
     position: absolute;
@@ -78,6 +83,7 @@
     min-height: var(--header-height);
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .menu__link:hover {
@@ -92,7 +98,6 @@
     .header__body {
         position: fixed;
         z-index: 2;
-        background-color: aqua;
         top: 0;
         left: 0;
         width: 100%;

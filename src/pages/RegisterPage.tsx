@@ -3,7 +3,7 @@ import s from "./RegisterPage.module.css";
 import { useForm } from "react-hook-form";
 import { IFormInputs } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { registerUser } from "../redux/auth/authSlice";
+import { registerUser, resetEmailError } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
 
 const RegisterPage = () => {
@@ -11,23 +11,23 @@ const RegisterPage = () => {
         register,
         handleSubmit,
         reset,
+        clearErrors,
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onBlur" });
 
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.auth.isLoading);
     const navigate = useNavigate();
+    const emailErrTxt = useAppSelector((state) => state.auth.emailErrTxt);
 
     const processFormData = async (data: IFormInputs) => {
-        const toastId = toast.loading("Registering...");
         try {
             const res = await dispatch(registerUser(data)).unwrap();
-            toast.success(`${res.message}`, { id: toastId });
+            toast.success(`${res.message}`);
             reset();
             navigate("/");
         } catch (err: any) {
-            toast.dismiss(toastId);
-            toast.error(err, { id: toastId });
+            toast.error(err[Object.keys(err)[0]]);
             console.error("Registration error:", err);
         }
     };
@@ -53,11 +53,19 @@ const RegisterPage = () => {
                                 value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}$/,
                                 message: "Enter a valid email address",
                             },
+                            onChange: () => {
+                                if (emailErrTxt) {
+                                    dispatch(resetEmailError());
+                                    clearErrors("email");
+                                }
+                            },
                         })}
                     />
-                    {errors?.email && (
+                    {(errors?.email || emailErrTxt) && (
                         <p className={s.register__error}>
-                            {errors.email?.message || "Please check the field"}
+                            {errors.email?.message ||
+                                emailErrTxt ||
+                                "Please check the field"}
                         </p>
                     )}
 

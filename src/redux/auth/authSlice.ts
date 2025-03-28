@@ -7,6 +7,8 @@ interface IAuthState {
     user: IUserInfo | null;
     isLoading: boolean;
     status: string | null;
+    emailErrTxt: string | null;
+    passwordErrTxt: string | null;
 }
 interface IAuthUserArgs {
     email: string;
@@ -23,12 +25,14 @@ const initialState: IAuthState = {
     user: null,
     isLoading: false,
     status: null,
+    emailErrTxt: null,
+    passwordErrTxt: null,
 };
 
 const registerUser = createAsyncThunk<
     IAuthUserResponse,
     IAuthUserArgs,
-    { rejectValue: string }
+    { rejectValue: Record<string, string> }
 >("auth/registerUser", async ({ email, password }, { rejectWithValue }) => {
     try {
         const res = await axios.post<IAuthUserResponse>("/auth/register", {
@@ -41,18 +45,18 @@ const registerUser = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error(err);
-        let errorMessage = "Registration failed. Please try later";
+        let generalError = { general: "Registration failed. Please try later" };
         if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
+            generalError = err.response?.data?.errors || generalError;
         }
-        return rejectWithValue(errorMessage);
+        return rejectWithValue(generalError);
     }
 });
 
 const loginUser = createAsyncThunk<
     IAuthUserResponse,
     IAuthUserArgs,
-    { rejectValue: string }
+    { rejectValue: Record<string, string> }
 >("auth/loginUser", async ({ email, password }, { rejectWithValue }) => {
     try {
         const res = await axios.post<IAuthUserResponse>("/auth/login", {
@@ -65,11 +69,11 @@ const loginUser = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error(err);
-        let errorMessage = "Login failed. Please try later";
+        let generalError = { general: "Login failed. Please try later" };
         if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
+            generalError = err.response?.data?.errors || generalError;
         }
-        return rejectWithValue(errorMessage);
+        return rejectWithValue(generalError);
     }
 });
 
@@ -102,6 +106,12 @@ const authSlice = createSlice({
             state.status = null;
             state.user = null;
         },
+        resetEmailError: (state) => {
+            state.emailErrTxt = null;
+        },
+        resetPasswordError: (state) => {
+            state.passwordErrTxt = null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -117,12 +127,15 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.isLoading = false;
+                state.emailErrTxt = action.payload?.email || null;
                 state.status = action.payload as string;
             })
             //LOGIN
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
                 state.status = null;
+                state.emailErrTxt = null;
+                state.passwordErrTxt = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -130,8 +143,11 @@ const authSlice = createSlice({
                 state.status = action.payload.message;
             })
             .addCase(loginUser.rejected, (state, action) => {
+                console.log("*******************", action.payload);
                 state.isLoading = false;
-                state.status = action.payload as string;
+                state.emailErrTxt = action.payload?.email || null;
+                state.passwordErrTxt = action.payload?.password || null;
+                /* state.status = action.payload as string; */
             })
             //GETPROFILE
             .addCase(getProfile.pending, (state) => {
@@ -150,6 +166,7 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetEmailError, resetPasswordError } =
+    authSlice.actions;
 export { registerUser, loginUser, getProfile };
 export default authSlice.reducer;

@@ -114,11 +114,11 @@ body._lock {
     --theme-disabled-opacity: .6;
     --theme-symbols-hover: #fff; */
 
-.popular-posts {
+/* .popular-posts {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-}
+} */
 
 /* .post {
     position: relative;
@@ -131,7 +131,7 @@ body._lock {
     object-fit: cover;
 } */
 
-.post-info {
+/* .post-info {
     position: absolute;
     bottom: 10px;
     left: 10px;
@@ -152,31 +152,31 @@ body._lock {
     margin-top: 5px;
 }
 
-/* Левая колонка (большой пост) */
+
 .post-large {
     grid-row: span 2;
 }
 
-/* Правая колонка */
+
 .posts-right {
     display: grid;
     grid-template-rows: 1fr 1fr;
     gap: 15px;
 }
 
-/* Верхняя строка в правой колонке (широкий пост) */
+
 .post-wide {
     width: 100%;
 }
 
-/* Нижняя строка с 2 маленькими постами */
+
 .posts-small {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-/* Маленькие посты */
+
 .post-small {
     height: 100%;
-}
+} */

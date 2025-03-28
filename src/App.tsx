@@ -11,6 +11,7 @@ import { getProfile } from "./redux/auth/authSlice";
 
 function App() {
     console.log("appRerender");
+
     const dispatch = useAppDispatch();
     useEffect(() => {
         console.log("useEffecrGetProfile");
