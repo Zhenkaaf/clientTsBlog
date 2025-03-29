@@ -5,15 +5,23 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { logout } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
+import Modal from "./Modal";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const dispatch = useAppDispatch();
 
     const user = useAppSelector((state) => state.auth.user);
     const isLoading = useAppSelector((state) => state.auth.isLoading);
     const openCloseMobMenu = () => {
         setIsMenuOpen((prev) => !prev);
+    };
+    const handleLogout = () => {
+        dispatch(logout());
+        localStorage.removeItem("tokenAutovibe");
+        toast.success("You have logged out! See you soon! 👋");
+        setIsLogoutModalOpen(false);
     };
 
     useEffect(() => {
@@ -37,7 +45,7 @@ export const Header = () => {
                             </Link>
 
                             {user && (
-                                <Link to="/login" className="link">
+                                <Link to="/garage" className="link">
                                     <div className={s.header__user}>
                                         <svg
                                             viewBox="0 0 512.000000 422.000000"
@@ -139,36 +147,32 @@ c-291 0 -532 -3 -535 -7z"
                                         Add Post
                                     </NavLink>
                                 </li>
-                                <li className={s.menu__item}>
-                                    <NavLink
-                                        to="/edit"
-                                        className={({ isActive }) =>
-                                            `${s.menu__link} ${
-                                                isActive
-                                                    ? s.menu__linkActive
-                                                    : ""
-                                            } link`
-                                        }
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Edit Post
-                                    </NavLink>
-                                </li>
+                                {user && (
+                                    <li className={s.menu__item}>
+                                        <NavLink
+                                            to="/garage"
+                                            className={({ isActive }) =>
+                                                `${s.menu__link} ${
+                                                    isActive
+                                                        ? s.menu__linkActive
+                                                        : ""
+                                                } link`
+                                            }
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            Garage
+                                        </NavLink>
+                                    </li>
+                                )}
                                 <li className={s.menu__item}>
                                     {user ? (
                                         <span
-                                            onClick={() => {
-                                                dispatch(logout());
-                                                localStorage.removeItem(
-                                                    "tokenAutovibe"
-                                                );
-                                                toast.success(
-                                                    "You have logged out! See you soon! 👋"
-                                                );
-                                            }}
+                                            onClick={() =>
+                                                setIsLogoutModalOpen(true)
+                                            }
                                             className={`${s.menu__link} link`}
                                         >
-                                            Exit
+                                            Log Out
                                         </span>
                                     ) : (
                                         <NavLink
@@ -182,7 +186,7 @@ c-291 0 -532 -3 -535 -7z"
                                             }
                                             onClick={() => setIsMenuOpen(false)}
                                         >
-                                            Login
+                                            Log In
                                         </NavLink>
                                     )}
                                 </li>
@@ -191,6 +195,18 @@ c-291 0 -532 -3 -535 -7z"
                     </div>
                 </div>
             </header>
+            {isLogoutModalOpen && (
+                <Modal
+                    isOpen={isLogoutModalOpen}
+                    onClose={() => setIsLogoutModalOpen(false)}
+                    onConfirm={handleLogout}
+                    title="Log Out"
+                    confirmText="Yes, log out"
+                    cancelText="Cancel"
+                >
+                    Are you sure you want to log out?
+                </Modal>
+            )}
         </>
     );
 };

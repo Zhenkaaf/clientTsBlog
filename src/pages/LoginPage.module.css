@@ -48,7 +48,7 @@
     cursor: pointer;
 }
 .login__button:hover {
-    background-color: rgb(77, 77, 250);
+    background-color: var(--color-btn-hover);
 }
 .login__button:disabled {
     background-color: var(--color-placeholder);
@@ -69,7 +69,7 @@
     text-decoration: underline;
 }
 .login__error {
-    color: red;
+    color: #ff4d4d;
     font-size: 14px;
     margin-top: -15px;
     word-wrap: break-word;

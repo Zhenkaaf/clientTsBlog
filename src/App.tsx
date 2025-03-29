@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import EditPostPage from "./pages/EditPostPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import GaragePage from "./pages/GaragePage";
 import { useAppDispatch } from "./redux/hooks";
 import { useEffect } from "react";
 import { getProfile } from "./redux/auth/authSlice";
@@ -28,6 +29,7 @@ function App() {
                 <Route path=":id/edit" element={<EditPostPage />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
+                <Route path="garage" element={<GaragePage />} />
             </Route>
         </Routes>
     );

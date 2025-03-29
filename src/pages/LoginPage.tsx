@@ -34,7 +34,7 @@ const LoginPage = () => {
             const res = await dispatch(loginUser(data)).unwrap();
             toast.success(`${res.message}`);
             reset();
-            navigate("/");
+            navigate("/garage");
         } catch (err: any) {
             toast.error(err[Object.keys(err)[0]]);
             console.error("Login error:", err);
