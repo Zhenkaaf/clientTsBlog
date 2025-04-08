@@ -92,6 +92,10 @@ const RegisterPage = () => {
                                 message: "Password can not contain spaces",
                             },
                         })}
+                        onInput={(e) => {
+                            const input = e.target as HTMLInputElement;
+                            input.value = input.value.replace(/\s/g, ""); // Убираем все пробелы
+                        }}
                     />
                     {errors?.password && (
                         <p className={s.register__error}>

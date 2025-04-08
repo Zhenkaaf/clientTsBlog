@@ -44,6 +44,8 @@
     cursor: pointer;
 }
 
-.modal__button:hover {
-    background-color: var(--color-btn-hover);
+@media (hover: hover) {
+    .modal__button:hover {
+        background-color: var(--color-btn-hover);
+    }
 }

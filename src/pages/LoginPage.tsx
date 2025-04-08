@@ -108,6 +108,10 @@ const LoginPage = () => {
                                 }
                             },
                         })}
+                        onInput={(e) => {
+                            const input = e.target as HTMLInputElement;
+                            input.value = input.value.replace(/\s/g, ""); // Убираем все пробелы
+                        }}
                     />
                     {(errors?.password || passwordErrTxt) && (
                         <p className={s.login__error}>
