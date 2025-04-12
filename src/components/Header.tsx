@@ -132,37 +132,44 @@ c-291 0 -532 -3 -535 -7z"
                                         Home
                                     </NavLink>
                                 </li>
-                                <li className={s.menu__item}>
-                                    <NavLink
-                                        to="/add"
-                                        className={({ isActive }) =>
-                                            `${s.menu__link} ${
-                                                isActive
-                                                    ? s.menu__linkActive
-                                                    : ""
-                                            } link`
-                                        }
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Add Post
-                                    </NavLink>
-                                </li>
+
                                 {user && (
-                                    <li className={s.menu__item}>
-                                        <NavLink
-                                            to="/garage"
-                                            className={({ isActive }) =>
-                                                `${s.menu__link} ${
-                                                    isActive
-                                                        ? s.menu__linkActive
-                                                        : ""
-                                                } link`
-                                            }
-                                            onClick={() => setIsMenuOpen(false)}
-                                        >
-                                            Garage
-                                        </NavLink>
-                                    </li>
+                                    <>
+                                        <li className={s.menu__item}>
+                                            <NavLink
+                                                to="/create-post"
+                                                className={({ isActive }) =>
+                                                    `${s.menu__link} ${
+                                                        isActive
+                                                            ? s.menu__linkActive
+                                                            : ""
+                                                    } link`
+                                                }
+                                                onClick={() =>
+                                                    setIsMenuOpen(false)
+                                                }
+                                            >
+                                                Create post
+                                            </NavLink>
+                                        </li>
+                                        <li className={s.menu__item}>
+                                            <NavLink
+                                                to="/my-posts"
+                                                className={({ isActive }) =>
+                                                    `${s.menu__link} ${
+                                                        isActive
+                                                            ? s.menu__linkActive
+                                                            : ""
+                                                    } link`
+                                                }
+                                                onClick={() =>
+                                                    setIsMenuOpen(false)
+                                                }
+                                            >
+                                                My posts
+                                            </NavLink>
+                                        </li>
+                                    </>
                                 )}
                                 <li className={s.menu__item}>
                                     {user ? (

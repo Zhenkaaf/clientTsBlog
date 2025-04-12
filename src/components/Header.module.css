@@ -2,7 +2,7 @@
     background-color: var(--color-header-bg);
     box-shadow: 0 4px 10px var(--color-shadow);
     min-height: var(--header-height);
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .header__body {

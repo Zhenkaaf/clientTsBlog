@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import myAxios from "../../api/axios";
 import { AxiosError } from "axios";
+import { logout } from "../auth/authSlice";
 
 interface IPostResponse {
     _id: string;
@@ -31,7 +32,7 @@ const createPost = createAsyncThunk<
     IPostResponse,
     FormData,
     { rejectValue: string }
->("post/createPost", async (formData, { rejectWithValue }) => {
+>("post/createPost", async (formData, { rejectWithValue, dispatch }) => {
     try {
         const res = await myAxios.post<IPostResponse>(
             "/post/create-post",
@@ -40,9 +41,15 @@ const createPost = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("create post error", err);
-        let errorMessage = "Failed to create post. Please try again later";
+        let errorMessage = "Failed to create post. Please try later";
         if (err instanceof AxiosError) {
             errorMessage = err.response?.data?.message || errorMessage;
+            // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
+            if (err.response?.status === 403) {
+                window.localStorage.removeItem("tokenAutovibe");
+                dispatch(clearPostErrTxt());
+                dispatch(logout());
+            }
         }
         return rejectWithValue(errorMessage);
     }
@@ -51,12 +58,17 @@ const createPost = createAsyncThunk<
 const postSlice = createSlice({
     name: "post",
     initialState,
-    reducers: {},
+    reducers: {
+        clearPostErrTxt: (state) => {
+            state.postErrTxt = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             //CREATE POST
             .addCase(createPost.pending, (state) => {
                 state.isLoading = true;
+                state.postErrTxt = null;
             })
             .addCase(createPost.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -72,5 +84,6 @@ const postSlice = createSlice({
     },
 });
 
+export const { clearPostErrTxt } = postSlice.actions;
 export { createPost };
 export default postSlice.reducer;

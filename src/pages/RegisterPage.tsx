@@ -25,7 +25,7 @@ const RegisterPage = () => {
             const res = await dispatch(registerUser(data)).unwrap();
             toast.success(`${res.message}`);
             reset();
-            navigate("/garage");
+            navigate("/create-post");
         } catch (err: any) {
             toast.error(err[Object.keys(err)[0]]);
             console.error("Registration error:", err);

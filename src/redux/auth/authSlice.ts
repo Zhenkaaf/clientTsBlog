@@ -85,7 +85,7 @@ const getProfile = createAsyncThunk<
 >("auth/getProfile", async (_, { rejectWithValue }) => {
     try {
         const res = await myAxios.get<IAuthUserResponse>("/auth/profile");
-        console.log(res.data);
+        console.log("get profile", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("get profile error", err);

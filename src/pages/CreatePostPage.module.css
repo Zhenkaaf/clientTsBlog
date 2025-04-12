@@ -1,7 +1,7 @@
-.login {
+.createPost {
 }
 
-.login__form {
+.createPost__form {
     background-color: var(--color-card-bg);
     display: flex;
     flex-direction: column;
@@ -11,11 +11,30 @@
     width: 100%;
     margin: 0 auto;
 }
-.login__title {
+.createPost__title {
     font-size: 32px;
     text-align: center;
 }
-.login__input {
+
+.createPost__img {
+    max-width: 100%;
+    max-height: 306px;
+    object-fit: cover;
+}
+
+.createPost__choosePhoto {
+    background-color: var(--color-button);
+    padding: 10px;
+    color: var(--color-primary);
+    font-size: 16px;
+    font-weight: 600;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.createPost__input,
+.createPost__textarea {
     font-family: "Comic Neue", Arial, Helvetica, sans-serif;
     padding: 10px;
     background-color: transparent;
@@ -26,19 +45,26 @@
     caret-color: var(--color-primary);
     letter-spacing: 1.2px;
 }
-.login__input::selection {
+.createPost__input::selection,
+.createPost__textarea::selection {
     background-color: var(--color-header-bg);
 }
-.login__input:focus {
+.createPost__input:focus,
+.createPost__textarea:focus {
     border-color: var(--color-button);
 }
-.login__input:-webkit-autofill {
+.createPost__input:-webkit-autofill,
+.createPost__textarea:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px var(--color-card-bg) inset !important;
     -webkit-text-fill-color: var(--color-primary) !important;
     border: 1px solid var(--color-button) !important;
 }
 
-.login__button {
+.createPost__textarea {
+    resize: none;
+}
+
+.createPost__button {
     background-color: var(--color-button);
     padding: 10px;
     color: var(--color-primary);
@@ -48,30 +74,19 @@
     cursor: pointer;
 }
 @media (hover: hover) {
-    .login__button:hover {
+    .createPost__button:hover,
+    .createPost__choosePhoto:hover:not(.createPost__choosePhoto_disabled) {
         background-color: var(--color-btn-hover);
     }
 }
 
-.login__button:disabled {
+.createPost__button:disabled,
+.createPost__choosePhoto_disabled {
     background-color: var(--color-placeholder);
     cursor: not-allowed;
 }
-.login__footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
 
-.login__link {
-    color: var(--color-button);
-    transition-duration: 0.3s;
-}
-.login__link:hover {
-    text-decoration: underline;
-}
-.login__error {
+.createPost__error {
     color: #ff4d4d;
     font-size: 14px;
     margin-top: -15px;

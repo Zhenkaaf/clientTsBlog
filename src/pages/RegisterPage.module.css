@@ -1,5 +1,4 @@
 .register {
-    margin-top: 20px;
 }
 
 .register__form {
@@ -17,6 +16,7 @@
     text-align: center;
 }
 .register__input {
+    font-family: "Comic Neue", Arial, Helvetica, sans-serif;
     padding: 10px;
     background-color: transparent;
     border: 1px solid #ffffff80;

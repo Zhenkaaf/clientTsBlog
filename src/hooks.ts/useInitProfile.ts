@@ -3,9 +3,11 @@ import { useAppDispatch } from "../redux/hooks";
 import { getProfile, setProfileChecked } from "../redux/auth/authSlice";
 
 const useInitProfile = () => {
+    console.log("useInitProfile");
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        console.log("useInitProfile-useEffect");
         const token = localStorage.getItem("tokenAutovibe");
         if (token) {
             dispatch(getProfile());

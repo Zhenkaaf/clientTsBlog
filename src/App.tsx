@@ -5,9 +5,10 @@ import HomePage from "./pages/HomePage";
 import EditPostPage from "./pages/EditPostPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import GaragePage from "./pages/GaragePage";
+import CreatePostPage from "./pages/CreatePostPage";
 import PrivateRoute from "./components/PrivateRoute";
 import useInitProfile from "./hooks.ts/useInitProfile";
+import MyPostsPage from "./pages/MyPostsPage";
 
 function App() {
     console.log("appRerender");
@@ -22,10 +23,18 @@ function App() {
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
                 <Route
-                    path="garage"
+                    path="create-post"
                     element={
                         <PrivateRoute>
-                            <GaragePage />
+                            <CreatePostPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="my-posts"
+                    element={
+                        <PrivateRoute>
+                            <MyPostsPage />
                         </PrivateRoute>
                     }
                 />
