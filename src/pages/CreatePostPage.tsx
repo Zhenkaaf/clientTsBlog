@@ -20,9 +20,6 @@ const CreatePostPage = () => {
     const [fileError, setFileError] = useState<string | null>(null);
     const dispatch = useAppDispatch();
     const postErrTxt = useAppSelector((state) => state.post.postErrTxt);
-    if (postErrTxt) {
-        console.error(postErrTxt);
-    }
 
     const isLoading = useAppSelector((state) => state.post.isLoading);
 

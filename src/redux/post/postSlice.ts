@@ -15,6 +15,7 @@ interface IPostResponse {
     updatedAt: string;
     __v: number;
 }
+
 interface IPostsState {
     posts: IPostResponse[];
     popularPosts: IPostResponse[];
@@ -46,8 +47,7 @@ const createPost = createAsyncThunk<
             errorMessage = err.response?.data?.message || errorMessage;
             // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
             if (err.response?.status === 403) {
-                window.localStorage.removeItem("tokenAutovibe");
-                dispatch(clearPostErrTxt());
+                localStorage.removeItem("tokenAutovibe");
                 dispatch(logout());
             }
         }
@@ -58,11 +58,7 @@ const createPost = createAsyncThunk<
 const postSlice = createSlice({
     name: "post",
     initialState,
-    reducers: {
-        clearPostErrTxt: (state) => {
-            state.postErrTxt = null;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             //CREATE POST
@@ -84,6 +80,6 @@ const postSlice = createSlice({
     },
 });
 
-export const { clearPostErrTxt } = postSlice.actions;
+/* export const { clearPostErrTxt } = postSlice.actions; */
 export { createPost };
 export default postSlice.reducer;
