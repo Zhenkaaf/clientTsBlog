@@ -45,7 +45,7 @@ export const Header = () => {
                             </Link>
 
                             {user && (
-                                <Link to="/garage" className="link">
+                                <Link to="/my-posts" className="link">
                                     <div className={s.header__user}>
                                         <svg
                                             viewBox="0 0 512.000000 422.000000"

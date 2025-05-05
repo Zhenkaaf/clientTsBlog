@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { JSX } from "react";
-import Spinner from "./Spinner";
 
 interface IPrivateRouteProps {
     children: JSX.Element;
@@ -13,7 +12,7 @@ const PrivateRoute = ({ children }: IPrivateRouteProps) => {
     const { user, isProfileChecked } = useAppSelector((state) => state.auth);
     console.log(user);
     // Если профиль еще проверяется — показываем загрузчик
-    if (!isProfileChecked) return <Spinner />;
+    if (!isProfileChecked) return null;
 
     // Если пользователя нет — редиректим
     if (!user) return <Navigate to="/login" replace />;

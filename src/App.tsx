@@ -9,6 +9,7 @@ import CreatePostPage from "./pages/CreatePostPage";
 import PrivateRoute from "./components/PrivateRoute";
 import useInitProfile from "./hooks.ts/useInitProfile";
 import MyPostsPage from "./pages/MyPostsPage";
+import PostPage from "./pages/PostPage";
 
 function App() {
     console.log("appRerender");
@@ -35,6 +36,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <MyPostsPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="post/:id"
+                    element={
+                        <PrivateRoute>
+                            <PostPage />
                         </PrivateRoute>
                     }
                 />

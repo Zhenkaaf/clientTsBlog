@@ -1,31 +1,42 @@
-import { useEffect, useState } from "react";
-import myAxios from "../api/axios";
-
-interface IPost {
-    _id: string;
-    title: string;
-    text: string;
-    imgUrl: string;
-    views: number;
-    authorId: string;
-    comments: unknown[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getMyPosts } from "../redux/post/postSlice";
+import Posts from "../components/Posts";
+import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
+import s from "./MyPostsPage.module.css";
 
 const MyPostsPage = () => {
-    const [posts, setPosts] = useState<IPost[]>([]);
+    const dispatch = useAppDispatch();
+    const { myPosts, isFetchedMyPosts, isLoading } = useAppSelector(
+        (state) => state.post
+    );
+
     useEffect(() => {
-        setTimeout(() => {
-            const fetchData = async () => {
-                const res = await myAxios.get("/post/my-posts");
-                console.log(res.data);
-            };
-            fetchData();
-        }, 2000);
-    }, []);
-    return <div>MyPostsPage</div>;
+        if (!isFetchedMyPosts) {
+            dispatch(getMyPosts());
+        }
+    }, [dispatch, isFetchedMyPosts]);
+
+    return (
+        <div className={s.posts}>
+            <div className="container">
+                {isLoading && <Spinner />}
+                {myPosts.length > 0 ? (
+                    <Posts title={"My posts"} posts={myPosts} />
+                ) : (
+                    <div className={s.noPosts}>
+                        <p className={s.noPosts__text}>
+                            You don't have any posts yet
+                        </p>
+                        <Link to="/create-post" className={s.noPosts__link}>
+                            Create Post
+                        </Link>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default MyPostsPage;

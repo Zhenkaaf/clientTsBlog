@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createPost } from "../redux/post/postSlice";
 import s from "./CreatePostPage.module.css";
 import { useForm } from "react-hook-form";
 import Spinner from "../components/Spinner";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import MDEditor from "@uiw/react-md-editor";
+import {
+    bold,
+    italic,
+    strikethrough,
+    link,
+} from "@uiw/react-md-editor/commands";
 
-interface IPostFormData {
-    title: string;
-    text: string;
-}
 interface IFormInputs {
     title: string;
     text: string;
@@ -19,9 +23,8 @@ const CreatePostPage = () => {
     const [imgURL, setImgURL] = useState<string | null>(null);
     const [fileError, setFileError] = useState<string | null>(null);
     const dispatch = useAppDispatch();
-    const postErrTxt = useAppSelector((state) => state.post.postErrTxt);
-
     const isLoading = useAppSelector((state) => state.post.isLoading);
+    const navigate = useNavigate();
 
     const handleChoosePhotoChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -59,8 +62,24 @@ const CreatePostPage = () => {
         handleSubmit,
         reset,
         setValue,
+        watch,
+        trigger,
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onBlur" });
+
+    //Так как MDEditor не использует register for validation
+    //мы его регестрируем сами при инициализации.
+    //этот вызов регистрирует поле формы с именем "text".
+    //  Это позволяет интегрировать поле в систему валидации react-hook-form
+    useEffect(() => {
+        register("text", {
+            required: "This field is required",
+            minLength: {
+                value: 10,
+                message: "Minimum 10 characters required",
+            },
+        });
+    }, [register]);
 
     const submitFormData = async (data: IFormInputs) => {
         try {
@@ -75,6 +94,7 @@ const CreatePostPage = () => {
                 setImg(null);
                 reset();
                 toast.success("Post successfully created!");
+                navigate("/my-posts");
             } else {
                 throw new Error("No image selected");
             }
@@ -133,8 +153,8 @@ const CreatePostPage = () => {
                                 message: "Minimum 3 characters required",
                             },
                             maxLength: {
-                                value: 100,
-                                message: "Maximum 100 characters allowed",
+                                value: 120,
+                                message: "Maximum 120 characters allowed",
                             },
                         })}
                         onBlur={(e) => {
@@ -144,6 +164,7 @@ const CreatePostPage = () => {
                             });
                         }}
                     />
+
                     {errors?.title && (
                         <p className={s.createPost__error}>
                             {errors.title?.message || "Please check the field"}
@@ -153,7 +174,7 @@ const CreatePostPage = () => {
                     <label className="visuallyHidden" htmlFor="text">
                         text
                     </label>
-                    <textarea
+                    {/* <textarea
                         id="text"
                         placeholder="Write your story"
                         className={s.createPost__textarea}
@@ -171,7 +192,31 @@ const CreatePostPage = () => {
                                 shouldValidate: true,
                             });
                         }}
+                    /> */}
+                    <MDEditor
+                        className={s.createPost__customEditor}
+                        value={watch("text")}
+                        onChange={(value = "") => {
+                            setValue("text", value);
+                        }}
+                        commands={[bold, italic, strikethrough, link]}
+                        extraCommands={[]}
+                        preview="edit"
+                        visibleDragbar={false}
+                        textareaProps={
+                            {
+                                placeholder: "Write your story",
+                                onBlur: (
+                                    e: React.FocusEvent<HTMLTextAreaElement>
+                                ) => {
+                                    const trimmed = e.target.value.trim();
+                                    setValue("text", trimmed);
+                                    trigger("text");
+                                },
+                            } as any
+                        }
                     />
+
                     {errors?.text && (
                         <p className={s.createPost__error}>
                             {errors.text?.message || "Please check the field"}

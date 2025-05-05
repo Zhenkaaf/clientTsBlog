@@ -1,3 +1,6 @@
+.popular {
+    margin-bottom: 30px;
+}
 .popular__wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

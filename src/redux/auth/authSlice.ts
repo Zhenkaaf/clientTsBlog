@@ -79,7 +79,7 @@ const loginUser = createAsyncThunk<
 
 const getProfile = createAsyncThunk<
     IAuthUserResponse,
-    //Вторым типом передаётся void, означает: этот thunk НЕ ожидает аргументов
+    //Вторым типом передаётся void, означает: этот thunk НЕ ожидает аргументов при вызове
     void,
     { rejectValue: string }
 >("auth/getProfile", async (_, { rejectWithValue }) => {
