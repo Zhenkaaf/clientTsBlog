@@ -123,6 +123,24 @@ const getPosts = createAsyncThunk<
     }
 });
 
+const delPostById = createAsyncThunk<
+    { message: string },
+    string,
+    { rejectValue: string }
+>("post/delPostById", async (postId, { rejectWithValue }) => {
+    try {
+        const res = await myAxios.delete(`/post/${postId}`);
+        return res.data;
+    } catch (err: unknown) {
+        console.error("delPostById error", err);
+        let errorMessage = "Failed to delete post. Please try again later.";
+        if (err instanceof AxiosError) {
+            errorMessage = err.response?.data?.message || errorMessage;
+        }
+        return rejectWithValue(errorMessage);
+    }
+});
+
 const postSlice = createSlice({
     name: "post",
     initialState,
@@ -183,10 +201,23 @@ const postSlice = createSlice({
             .addCase(getPostById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.postErrTxt = action.payload || null;
+            })
+            //DEL POST
+            .addCase(delPostById.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(delPostById.fulfilled, (state, action) => {
+                console.log(action);
+                state.isLoading = false;
+                state.isFetchedMyPosts = false;
+            })
+            .addCase(delPostById.rejected, (state, action) => {
+                state.isLoading = false;
+                state.postErrTxt = action.payload || null;
             });
     },
 });
 
 /* export const { clearPostErrTxt } = postSlice.actions; */
-export { createPost, getMyPosts, getPosts, getPostById };
+export { createPost, getMyPosts, getPosts, getPostById, delPostById };
 export default postSlice.reducer;

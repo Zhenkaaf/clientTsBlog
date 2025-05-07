@@ -30,7 +30,7 @@ const HomePage = () => {
                 pause={3000}
             />
             <PopularPosts />
-            <Posts title={"Posts"} posts={posts} />
+            <Posts title={"Posts"} posts={posts} isOwnerView={false} />
         </div>
     );
 };

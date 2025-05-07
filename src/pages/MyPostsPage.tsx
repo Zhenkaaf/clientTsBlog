@@ -20,21 +20,19 @@ const MyPostsPage = () => {
 
     return (
         <div className={s.posts}>
-            <div className="container">
-                {isLoading && <Spinner />}
-                {myPosts.length > 0 ? (
-                    <Posts title={"My posts"} posts={myPosts} />
-                ) : (
-                    <div className={s.noPosts}>
-                        <p className={s.noPosts__text}>
-                            You don't have any posts yet
-                        </p>
-                        <Link to="/create-post" className={s.noPosts__link}>
-                            Create Post
-                        </Link>
-                    </div>
-                )}
-            </div>
+            {isLoading && <Spinner />}
+            {myPosts.length > 0 ? (
+                <Posts title={"My posts"} posts={myPosts} isOwnerView={true} />
+            ) : (
+                <div className={s.noPosts}>
+                    <p className={s.noPosts__text}>
+                        You don't have any posts yet
+                    </p>
+                    <Link to="/create-post" className={s.noPosts__link}>
+                        Create Post
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };

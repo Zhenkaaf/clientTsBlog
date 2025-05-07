@@ -1,9 +1,12 @@
 import s from "./Post.module.css";
 import { Link } from "react-router-dom";
-import { MessageSquare, Eye } from "lucide-react";
-import { useState } from "react";
+import { MessageSquare, Eye, Trash2, Pencil } from "lucide-react";
+import { MouseEvent, useState } from "react";
 import { formatDate } from "../utils/formatDate";
 import removeMarkdown from "remove-markdown";
+import { delPostById } from "../redux/post/postSlice";
+import { useAppDispatch } from "../redux/hooks";
+import toast from "react-hot-toast";
 
 interface IPostResponse {
     _id: string;
@@ -19,13 +22,35 @@ interface IPostResponse {
 }
 interface IPostProps {
     post: IPostResponse;
+    isOwnerView: boolean;
 }
 
-const Post = ({ post }: IPostProps) => {
+const Post = ({ post, isOwnerView }: IPostProps) => {
     /*  console.log(post); */
     const [imgLoaded, setImgLoaded] = useState(false);
+    const dispatch = useAppDispatch();
+    const handleDelete = async (e: MouseEvent<SVGSVGElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+            const data = await dispatch(delPostById(post._id)).unwrap();
+            toast.success(data.message);
+        } catch (err: any) {
+            console.error("Error:", err);
+            toast.error(err);
+        }
+    };
     return (
         <Link className={`${s.post} link`} to={`/post/${post._id}`}>
+            {isOwnerView && (
+                <div className={s.post__actions}>
+                    <Pencil className={s.post__actionEdit} />
+                    <Trash2
+                        className={s.post__actionDelete}
+                        onClick={handleDelete}
+                    />
+                </div>
+            )}
             <div className={s.post__imageWrapper}>
                 {" "}
                 <img
