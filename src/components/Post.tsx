@@ -1,12 +1,13 @@
 import s from "./Post.module.css";
 import { Link } from "react-router-dom";
 import { MessageSquare, Eye, Trash2, Pencil } from "lucide-react";
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { formatDate } from "../utils/formatDate";
 import removeMarkdown from "remove-markdown";
 import { delPostById } from "../redux/post/postSlice";
 import { useAppDispatch } from "../redux/hooks";
 import toast from "react-hot-toast";
+import Modal from "./Modal";
 
 interface IPostResponse {
     _id: string;
@@ -29,57 +30,80 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
     /*  console.log(post); */
     const [imgLoaded, setImgLoaded] = useState(false);
     const dispatch = useAppDispatch();
-    const handleDelete = async (e: MouseEvent<SVGSVGElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const handleDelete = async () => {
         try {
             const data = await dispatch(delPostById(post._id)).unwrap();
             toast.success(data.message);
+            setIsDeleteModalOpen(false);
         } catch (err: any) {
             console.error("Error:", err);
             toast.error(err);
         }
     };
     return (
-        <Link className={`${s.post} link`} to={`/post/${post._id}`}>
-            {isOwnerView && (
-                <div className={s.post__actions}>
-                    <Pencil className={s.post__actionEdit} />
-                    <Trash2
-                        className={s.post__actionDelete}
-                        onClick={handleDelete}
+        <>
+            <Link className={`${s.post} link`} to={`/post/${post._id}`}>
+                {isOwnerView && (
+                    <div className={s.post__actions}>
+                        <Pencil className={s.post__actionEdit} />
+                        <Trash2
+                            className={s.post__actionDelete}
+                            /*  onClick={handleDelete} */
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsDeleteModalOpen(true);
+                            }}
+                        />
+                    </div>
+                )}
+                <div className={s.post__imageWrapper}>
+                    {" "}
+                    <img
+                        src={post.imgUrl}
+                        alt=""
+                        /*  className={s.post__image} */ className={`${
+                            s.post__image
+                        } ${imgLoaded ? s.loaded : s.loading}`}
+                        onLoad={() => setImgLoaded(true)}
                     />
                 </div>
-            )}
-            <div className={s.post__imageWrapper}>
-                {" "}
-                <img
-                    src={post.imgUrl}
-                    alt=""
-                    /*  className={s.post__image} */ className={`${
-                        s.post__image
-                    } ${imgLoaded ? s.loaded : s.loading}`}
-                    onLoad={() => setImgLoaded(true)}
-                />
-            </div>
-            <div className={s.post__info}>
-                <div className={s.post__details}>
-                    <div className={s.post__stats}>
-                        <div className={s.post__views}>
-                            <Eye size={14} /> {post.views}
+                <div className={s.post__info}>
+                    <div className={s.post__details}>
+                        <div className={s.post__stats}>
+                            <div className={s.post__views}>
+                                <Eye size={14} /> {post.views}
+                            </div>
+                            <div className={s.post__comments}>
+                                <MessageSquare size={14} />{" "}
+                                {post.comments.length}
+                            </div>
                         </div>
-                        <div className={s.post__comments}>
-                            <MessageSquare size={14} /> {post.comments.length}
-                        </div>
+                        <time dateTime={post.createdAt}>
+                            {formatDate(post.createdAt)}
+                        </time>
                     </div>
-                    <time dateTime={post.createdAt}>
-                        {formatDate(post.createdAt)}
-                    </time>
+                    <h4 className={s.post__title}>{post.title}</h4>
+                    <div className={s.post__desc}>
+                        {" "}
+                        {removeMarkdown(post.text)}
+                    </div>
                 </div>
-                <h4 className={s.post__title}>{post.title}</h4>
-                <div className={s.post__desc}> {removeMarkdown(post.text)}</div>
-            </div>
-        </Link>
+            </Link>
+            {isDeleteModalOpen && (
+                <Modal
+                    isOpen={isDeleteModalOpen}
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    onConfirm={handleDelete}
+                    title="Delete Post"
+                    confirmText="Yes, delete"
+                    cancelText="Cancel"
+                >
+                    Are you sure you want to delete this post?
+                </Modal>
+            )}
+        </>
     );
 };
 

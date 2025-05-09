@@ -10,7 +10,7 @@ const HomePage = () => {
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.post.isLoading);
     const posts = useAppSelector((state) => state.post.posts);
-    const popularPosts = useAppSelector((state) => state.post.popularPosts);
+    /*  const popularPosts = useAppSelector((state) => state.post.popularPosts); */
 
     useEffect(() => {
         dispatch(getPosts());
