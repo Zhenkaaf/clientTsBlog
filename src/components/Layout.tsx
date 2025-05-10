@@ -6,9 +6,12 @@ export const Layout = () => {
     return (
         <div className="wrapper">
             <Header />
+
             <div className="main">
-                <Outlet />
-                <Toaster position="bottom-right" />
+                <div className="container">
+                    <Outlet />
+                    <Toaster position="bottom-right" />
+                </div>
             </div>
 
             <footer className="footer">

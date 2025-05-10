@@ -25,53 +25,51 @@ const PostPage = () => {
     console.log(id);
     return (
         <div className={s.post}>
-            <div className="container">
-                {isLoading && <Spinner />}
-                {post && (
-                    <div className={s.post__wrapper}>
-                        <div className={s.post__imageWrapper}>
-                            {" "}
-                            <img
-                                src={post.imgUrl}
-                                alt=""
-                                className={s.post__image}
-                            />
-                        </div>
-                        <div className={s.post__info}>
-                            <div className={s.post__details}>
-                                <div className={s.post__stats}>
-                                    <div className={s.post__views}>
-                                        <Eye size={14} /> {post.views}
-                                    </div>
-                                    <div className={s.post__comments}>
-                                        <MessageSquare size={14} />{" "}
-                                        {post.comments.length}
-                                    </div>
-                                </div>
-                                <time dateTime={post.createdAt}>
-                                    {formatDate(post.createdAt)}
-                                </time>
-                            </div>
-                            <h4 className={s.post__title}>{post.title}</h4>
-                            <MDEditor.Markdown
-                                source={post.text}
-                                rehypePlugins={[rehypeRaw]}
-                                components={{
-                                    a: (props) => (
-                                        <a
-                                            {...props}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        />
-                                    ),
-                                }}
-                                className={s.post__desc}
-                            />
-                            {/*  <div className={s.post__desc}>{post.text}</div> */}
-                        </div>
+            {isLoading && <Spinner />}
+            {post && (
+                <div className={s.post__wrapper}>
+                    <div className={s.post__imageWrapper}>
+                        {" "}
+                        <img
+                            src={post.imgUrl}
+                            alt=""
+                            className={s.post__image}
+                        />
                     </div>
-                )}
-            </div>
+                    <div className={s.post__info}>
+                        <div className={s.post__details}>
+                            <div className={s.post__stats}>
+                                <div className={s.post__views}>
+                                    <Eye size={14} /> {post.views}
+                                </div>
+                                <div className={s.post__comments}>
+                                    <MessageSquare size={14} />{" "}
+                                    {post.comments.length}
+                                </div>
+                            </div>
+                            <time dateTime={post.createdAt}>
+                                {formatDate(post.createdAt)}
+                            </time>
+                        </div>
+                        <h4 className={s.post__title}>{post.title}</h4>
+                        <MDEditor.Markdown
+                            source={post.text}
+                            rehypePlugins={[rehypeRaw]}
+                            components={{
+                                a: (props) => (
+                                    <a
+                                        {...props}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    />
+                                ),
+                            }}
+                            className={s.post__desc}
+                        />
+                        {/*  <div className={s.post__desc}>{post.text}</div> */}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

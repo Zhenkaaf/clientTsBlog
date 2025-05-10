@@ -23,6 +23,7 @@ function App() {
                 <Route path=":id/edit" element={<EditPostPage />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
+                <Route path="post/:id" element={<PostPage />} />
                 <Route
                     path="create-post"
                     element={
@@ -36,14 +37,6 @@ function App() {
                     element={
                         <PrivateRoute>
                             <MyPostsPage />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="post/:id"
-                    element={
-                        <PrivateRoute>
-                            <PostPage />
                         </PrivateRoute>
                     }
                 />

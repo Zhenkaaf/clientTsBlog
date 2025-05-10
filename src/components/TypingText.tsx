@@ -53,12 +53,12 @@ const TypingText = ({ texts, speed = 50, pause = 3000 }: TypingTextProps) => {
 
     return (
         <section className={s.typing}>
-            <div className="container">
-                <div className={s.typing__body}>
-                    <span>Welcome to the AUTOVIBE blog!</span>{" "}
-                    {texts[textIndex].slice(0, charIndex)}
-                    {showCursor && "_"}
-                </div>
+            <div className={s.typing__body}>
+                <span className={s.typing__text}>
+                    Welcome to the AUTOVIBE blog!
+                </span>{" "}
+                {texts[textIndex].slice(0, charIndex)}
+                {showCursor && "_"}
             </div>
         </section>
     );

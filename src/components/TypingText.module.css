@@ -14,7 +14,7 @@
 
 .typing__body span {
     color: var(--color-placeholder);
-    display: inline-block; /* Важно для работы ellipsis */
+    display: inline-block; /*  Важно для работы ellipsis  */
     max-width: 100%;
 }
 

@@ -105,76 +105,76 @@ const CreatePostPage = () => {
     };
 
     return (
-        <div className={s.createPost}>
+        <section className={s.createPost}>
             {isLoading && <Spinner />}
-            <section className="container">
-                <form
-                    onSubmit={handleSubmit(submitFormData)}
-                    className={s.createPost__form}
+
+            <form
+                onSubmit={handleSubmit(submitFormData)}
+                className={s.createPost__form}
+            >
+                <h3 className={s.createPost__title}>Create post</h3>
+                {imgURL && (
+                    <img
+                        className={s.createPost__img}
+                        src={imgURL}
+                        alt="image"
+                    />
+                )}
+                <label
+                    className={`${s.createPost__choosePhoto} ${
+                        imgURL ? s.createPost__choosePhoto_disabled : ""
+                    }`}
+                    htmlFor="choosePhoto"
                 >
-                    <h3 className={s.createPost__title}>Create post</h3>
-                    {imgURL && (
-                        <img
-                            className={s.createPost__img}
-                            src={imgURL}
-                            alt="image"
-                        />
-                    )}
-                    <label
-                        className={`${s.createPost__choosePhoto} ${
-                            imgURL ? s.createPost__choosePhoto_disabled : ""
-                        }`}
-                        htmlFor="choosePhoto"
-                    >
-                        Choose photo (Max 8MB, JPG/PNG only)
-                    </label>
-                    <input
-                        className="visuallyHidden"
-                        type="file"
-                        id="choosePhoto"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={handleChoosePhotoChange}
-                    />
-                    {fileError && (
-                        <p className={s.createPost__error}>{fileError}</p>
-                    )}
-                    <label className="visuallyHidden" htmlFor="title">
-                        title
-                    </label>
-                    <input
-                        type="text"
-                        id="title"
-                        placeholder="Title"
-                        className={s.createPost__input}
-                        {...register("title", {
-                            required: "This field is required",
-                            minLength: {
-                                value: 3,
-                                message: "Minimum 3 characters required",
-                            },
-                            maxLength: {
-                                value: 120,
-                                message: "Maximum 120 characters allowed",
-                            },
-                        })}
-                        onBlur={(e) => {
-                            const trimmed = e.target.value.trim();
-                            setValue("title", trimmed, {
-                                shouldValidate: true,
-                            });
-                        }}
-                    />
+                    Choose photo (Max 8MB, JPG/PNG only)
+                </label>
+                <input
+                    className="visuallyHidden"
+                    type="file"
+                    id="choosePhoto"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={handleChoosePhotoChange}
+                />
+                {fileError && (
+                    <p className={s.createPost__error}>{fileError}</p>
+                )}
+                <label className="visuallyHidden" htmlFor="title">
+                    title
+                </label>
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Title"
+                    className={s.createPost__input}
+                    {...register("title", {
+                        required: "This field is required",
+                        minLength: {
+                            value: 3,
+                            message: "Minimum 3 characters required",
+                        },
+                        maxLength: {
+                            value: 120,
+                            message: "Maximum 120 characters allowed",
+                        },
+                    })}
+                    onBlur={(e) => {
+                        const trimmed = e.target.value.trim();
+                        setValue("title", trimmed, {
+                            shouldValidate: true,
+                        });
+                    }}
+                />
 
-                    {errors?.title && (
-                        <p className={s.createPost__error}>
-                            {errors.title?.message || "Please check the field"}
-                        </p>
-                    )}
+                {errors?.title && (
+                    <p className={s.createPost__error}>
+                        {errors.title?.message || "Please check the field"}
+                    </p>
+                )}
 
-                    <label className="visuallyHidden" htmlFor="text">
-                        text
-                    </label>
-                    {/* <textarea
+                <label className="visuallyHidden" htmlFor="text">
+                    text
+                </label>
+                {/* <textarea
                         id="text"
                         placeholder="Write your story"
                         className={s.createPost__textarea}
@@ -193,53 +193,52 @@ const CreatePostPage = () => {
                             });
                         }}
                     /> */}
-                    <MDEditor
-                        className={s.createPost__customEditor}
-                        value={watch("text")}
-                        onChange={(value = "") => {
-                            setValue("text", value);
-                        }}
-                        commands={[bold, italic, strikethrough, link]}
-                        extraCommands={[]}
-                        preview="edit"
-                        visibleDragbar={false}
-                        textareaProps={
-                            {
-                                placeholder: "Write your story",
-                                onBlur: (
-                                    e: React.FocusEvent<HTMLTextAreaElement>
-                                ) => {
-                                    const trimmed = e.target.value.trim();
-                                    setValue("text", trimmed);
-                                    trigger("text");
-                                },
-                            } as any
-                        }
-                    />
+                <MDEditor
+                    className={s.createPost__customEditor}
+                    value={watch("text")}
+                    onChange={(value = "") => {
+                        setValue("text", value);
+                    }}
+                    commands={[bold, italic, strikethrough, link]}
+                    extraCommands={[]}
+                    preview="edit"
+                    visibleDragbar={false}
+                    textareaProps={
+                        {
+                            placeholder: "Write your story",
+                            onBlur: (
+                                e: React.FocusEvent<HTMLTextAreaElement>
+                            ) => {
+                                const trimmed = e.target.value.trim();
+                                setValue("text", trimmed);
+                                trigger("text");
+                            },
+                        } as any
+                    }
+                />
 
-                    {errors?.text && (
-                        <p className={s.createPost__error}>
-                            {errors.text?.message || "Please check the field"}
-                        </p>
-                    )}
+                {errors?.text && (
+                    <p className={s.createPost__error}>
+                        {errors.text?.message || "Please check the field"}
+                    </p>
+                )}
 
-                    <button
-                        className={s.createPost__button}
-                        type="submit"
-                        disabled={!isValid || !imgURL}
-                        title={
-                            !isValid
-                                ? "Please fill in all required fields"
-                                : !imgURL
-                                ? "Please select an image"
-                                : ""
-                        }
-                    >
-                        Publish
-                    </button>
-                </form>
-            </section>
-        </div>
+                <button
+                    className={s.createPost__button}
+                    type="submit"
+                    disabled={!isValid || !imgURL}
+                    title={
+                        !isValid
+                            ? "Please fill in all required fields"
+                            : !imgURL
+                            ? "Please select an image"
+                            : ""
+                    }
+                >
+                    Publish
+                </button>
+            </form>
+        </section>
     );
 };
 
