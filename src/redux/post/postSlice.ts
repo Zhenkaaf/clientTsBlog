@@ -144,7 +144,11 @@ const delPostById = createAsyncThunk<
 const postSlice = createSlice({
     name: "post",
     initialState,
-    reducers: {},
+    reducers: {
+        clearCurrentPost(state) {
+            state.currentPost = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             //CREATE POST
@@ -218,6 +222,6 @@ const postSlice = createSlice({
     },
 });
 
-/* export const { clearPostErrTxt } = postSlice.actions; */
+export const { clearCurrentPost } = postSlice.actions;
 export { createPost, getMyPosts, getPosts, getPostById, delPostById };
 export default postSlice.reducer;

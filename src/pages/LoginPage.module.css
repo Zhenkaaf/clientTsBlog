@@ -16,7 +16,7 @@
     text-align: center;
 }
 .login__input {
-    font-family: "Comic Neue", Arial, Helvetica, sans-serif;
+    font-family: var(--font-main);
     padding: 10px;
     background-color: transparent;
     border: 1px solid #ffffff80;
@@ -42,8 +42,9 @@
     background-color: var(--color-button);
     padding: 10px;
     color: var(--color-primary);
-    font-size: 16px;
-    font-weight: 600;
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 700;
     transition-duration: 0.3s;
     cursor: pointer;
 }

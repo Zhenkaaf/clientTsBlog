@@ -63,9 +63,8 @@ const CreatePostPage = () => {
         reset,
         setValue,
         watch,
-        trigger,
         formState: { errors, isValid },
-    } = useForm<IFormInputs>({ mode: "onBlur" });
+    } = useForm<IFormInputs>({ mode: "onChange" });
 
     //Так как MDEditor не использует register for validation
     //мы его регестрируем сами при инициализации.
@@ -197,7 +196,7 @@ const CreatePostPage = () => {
                     className={s.createPost__customEditor}
                     value={watch("text")}
                     onChange={(value = "") => {
-                        setValue("text", value);
+                        setValue("text", value, { shouldValidate: true });
                     }}
                     commands={[bold, italic, strikethrough, link]}
                     extraCommands={[]}
@@ -210,8 +209,9 @@ const CreatePostPage = () => {
                                 e: React.FocusEvent<HTMLTextAreaElement>
                             ) => {
                                 const trimmed = e.target.value.trim();
-                                setValue("text", trimmed);
-                                trigger("text");
+                                setValue("text", trimmed, {
+                                    shouldValidate: true,
+                                });
                             },
                         } as any
                     }

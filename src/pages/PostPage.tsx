@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useEffect } from "react";
-import { getPostById } from "../redux/post/postSlice";
+import { clearCurrentPost, getPostById } from "../redux/post/postSlice";
 import Spinner from "../components/Spinner";
 import s from "./PostPage.module.css";
 import { formatDate } from "../utils/formatDate";
@@ -17,12 +17,14 @@ const PostPage = () => {
     );
 
     useEffect(() => {
-        if (id !== undefined) {
+        if (id) {
             dispatch(getPostById(id));
         }
+        return () => {
+            dispatch(clearCurrentPost());
+        };
     }, [dispatch, id]);
 
-    console.log(id);
     return (
         <div className={s.post}>
             {isLoading && <Spinner />}

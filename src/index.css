@@ -27,6 +27,7 @@ h6 {
     font-size: inherit;
 }
 :root {
+    --font-main: "Nunito", Arial, Helvetica, sans-serif;
     --color-body-bg: #171717;
     --color-card-bg: #333;
     --color-header-bg: #000;
@@ -45,7 +46,7 @@ body {
     height: 100%;
     line-height: 1;
     font-size: 16px;
-    font-family: "Comic Neue", Arial, Helvetica, sans-serif;
+    font-family: var(--font-main);
     background-color: var(--color-body-bg);
     color: var(--color-primary);
 }

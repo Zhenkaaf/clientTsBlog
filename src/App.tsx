@@ -20,7 +20,14 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                <Route path=":id/edit" element={<EditPostPage />} />
+                <Route
+                    path="edit/:id"
+                    element={
+                        <PrivateRoute>
+                            <EditPostPage />
+                        </PrivateRoute>
+                    }
+                />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="post/:id" element={<PostPage />} />

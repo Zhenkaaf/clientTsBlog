@@ -107,6 +107,7 @@
     width: 100%;
 }
 .post__desc {
+    font-family: var(--font-main);
     line-height: 1.3;
     display: -webkit-box;
     display: box;
