@@ -1,5 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getPostById } from "../redux/post/postSlice";
+import {
+    clearCurrentPost,
+    getPostById,
+    updatePostById,
+} from "../redux/post/postSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useEffect, useRef, useState } from "react";
 import s from "./CreatePostPage.module.css";
@@ -12,6 +16,7 @@ import {
     strikethrough,
     link,
 } from "@uiw/react-md-editor/commands";
+import toast from "react-hot-toast";
 
 interface IFormInputs {
     title: string;
@@ -23,8 +28,8 @@ const EditPostPage = () => {
     const post = useAppSelector((state) => state.post.currentPost);
     const isLoading = useAppSelector((state) => state.post.isLoading);
     const [img, setImg] = useState<File | null>(null);
-    const [crntImgURL, setCrntImgURL] = useState<string | undefined>(undefined);
-    const [newImgURL, setNewImgURL] = useState<string | undefined>(undefined);
+    const [crntImgURL, setCrntImgURL] = useState<string | null>(null);
+    const [newImgURL, setNewImgURL] = useState<string | null>(null);
     const [fileError, setFileError] = useState<string | null>(null);
     const [imageChanged, setImageChanged] = useState(false);
     const currentData = useRef<{
@@ -43,9 +48,10 @@ const EditPostPage = () => {
         watch,
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onChange" });
+    const watchedTitle = watch("title");
+    const watchedText = watch("text");
 
     useEffect(() => {
-        console.log(1);
         register("text", {
             required: "This field is required",
             minLength: {
@@ -56,18 +62,18 @@ const EditPostPage = () => {
     }, [register]);
 
     useEffect(() => {
-        console.log(2);
         const getPost = async () => {
             if (id) {
-                console.log("id received");
                 await dispatch(getPostById(id));
             }
         };
         getPost();
+        return () => {
+            dispatch(clearCurrentPost());
+        };
     }, [dispatch, id]);
 
     useEffect(() => {
-        console.log(3);
         if (post) {
             console.log("post received");
             setValue("title", post.title);
@@ -79,22 +85,15 @@ const EditPostPage = () => {
             };
         }
     }, [post, setValue]);
-    useEffect(() => {
-        console.log("currentData BEFORE update:", currentData.current);
-    }, [post]);
-    console.log(currentData);
-    const watchedTitle = watch("title");
-    const watchedText = watch("text");
 
+    //Перед сравнением нужно "нормализовать" строки, чтобы не было зависимости от того, откуда пришёл текст — с Windows, Linux или браузера.
     const normalizeNewlines = (str: string) =>
         str.replace(/\r\n/g, "\n").trim();
-
     const hasChanges =
         normalizeNewlines(watchedTitle || "") !==
             normalizeNewlines(currentData.current.title) ||
         normalizeNewlines(watchedText || "") !==
-            normalizeNewlines(currentData.current.text) ||
-        !!img;
+            normalizeNewlines(currentData.current.text);
 
     const navigate = useNavigate();
 
@@ -103,10 +102,9 @@ const EditPostPage = () => {
     ) => {
         const file = e.target.files?.[0];
         console.log(file);
-        // Проверка на наличие файла
         if (!file) {
             setImg(null);
-            setNewImgURL(undefined);
+            setNewImgURL(null);
             setFileError(null);
             setImageChanged(false);
             return;
@@ -121,7 +119,7 @@ const EditPostPage = () => {
             setFileError("The file size must be less than 8MB.");
             return;
         }
-        // Если файл прошёл все проверки
+
         setFileError(null);
         setImg(file);
         setNewImgURL(URL.createObjectURL(file));
@@ -129,26 +127,30 @@ const EditPostPage = () => {
     };
 
     const submitFormData = async (data: IFormInputs) => {
-        /* try {
-            if (img) {
+        try {
+            if (id) {
                 const formData = new FormData();
-                formData.append("image", img);
+                if (imageChanged && img) {
+                    formData.append("image", img);
+                }
                 formData.append("title", data.title);
                 formData.append("text", data.text);
-                const post = await dispatch(createPost(formData)).unwrap();
-                console.log("Ответ от сервера:", post);
-                setImgURL(null);
+                await dispatch(
+                    updatePostById({ postId: id, formData })
+                ).unwrap();
+                setCrntImgURL(null);
+                setNewImgURL(null);
                 setImg(null);
                 reset();
-                toast.success("Post successfully created!");
+                toast.success("Post successfully updated!");
                 navigate("/my-posts");
             } else {
-                throw new Error("No image selected");
+                throw new Error("Post ID not found");
             }
         } catch (err: any) {
             console.error("Error:", err);
             toast.error(err);
-        } */
+        }
     };
 
     return (
@@ -164,15 +166,15 @@ const EditPostPage = () => {
                     <img
                         className={s.createPost__img}
                         src={newImgURL}
-                        alt="image"
+                        alt="new image"
                     />
-                ) : (
+                ) : crntImgURL ? (
                     <img
                         className={s.createPost__img}
                         src={crntImgURL}
-                        alt="image"
+                        alt="current image"
                     />
-                )}
+                ) : null}
                 <label
                     className={`${s.createPost__choosePhoto} ${
                         newImgURL ? s.createPost__choosePhoto_disabled : ""

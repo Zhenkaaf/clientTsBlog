@@ -30,6 +30,10 @@ interface IPostsState {
     isLoading: boolean;
     postErrTxt: string | null;
 }
+interface UpdatePostPayload {
+    postId: string;
+    formData: FormData;
+}
 
 const initialState: IPostsState = {
     posts: [],
@@ -66,6 +70,35 @@ const createPost = createAsyncThunk<
         return rejectWithValue(errorMessage);
     }
 });
+
+const updatePostById = createAsyncThunk<
+    IPostResponse,
+    UpdatePostPayload,
+    { rejectValue: string }
+>(
+    "post/updatePostById",
+    async ({ postId, formData }, { rejectWithValue, dispatch }) => {
+        try {
+            const res = await myAxios.put<IPostResponse>(
+                `/post/${postId}`,
+                formData
+            );
+            return res.data;
+        } catch (err: unknown) {
+            console.error("update post error", err);
+            let errorMessage = "Failed to update post. Please try later";
+            if (err instanceof AxiosError) {
+                errorMessage = err.response?.data?.message || errorMessage;
+                // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
+                if (err.response?.status === 403) {
+                    localStorage.removeItem("tokenAutovibe");
+                    dispatch(logout());
+                }
+            }
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
 
 const getPostById = createAsyncThunk<
     IPostResponse,
@@ -160,11 +193,25 @@ const postSlice = createSlice({
                 state.isLoading = false;
                 state.posts = [...state.posts, action.payload];
                 state.isFetchedMyPosts = false;
+                //Можно и push
                 //state.posts.push(action.payload);
                 //push() изменяет оригинальный массив,
                 //но Immer отслеживает это и создаёт новый объект для стейта.
             })
             .addCase(createPost.rejected, (state, action) => {
+                state.isLoading = false;
+                state.postErrTxt = action.payload || null;
+            })
+            //UPDATE POST
+            .addCase(updatePostById.pending, (state) => {
+                state.isLoading = true;
+                state.postErrTxt = null;
+            })
+            .addCase(updatePostById.fulfilled, (state) => {
+                state.isLoading = false;
+                state.isFetchedMyPosts = false;
+            })
+            .addCase(updatePostById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.postErrTxt = action.payload || null;
             })
@@ -223,5 +270,12 @@ const postSlice = createSlice({
 });
 
 export const { clearCurrentPost } = postSlice.actions;
-export { createPost, getMyPosts, getPosts, getPostById, delPostById };
+export {
+    createPost,
+    getMyPosts,
+    getPosts,
+    getPostById,
+    delPostById,
+    updatePostById,
+};
 export default postSlice.reducer;
