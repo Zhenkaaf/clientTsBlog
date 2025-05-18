@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import myAxios from "../../api/axios";
 import { AxiosError } from "axios";
 import { logout } from "../auth/authSlice";
+import { AppDispatch } from "../store";
 
 interface IPostResponse {
     _id: string;
@@ -45,10 +46,29 @@ const initialState: IPostsState = {
     postErrTxt: null,
 };
 
+const handleError = (
+    err: unknown,
+    defaultMessage: string,
+    dispatch?: AppDispatch
+): string => {
+    if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data?.message || defaultMessage;
+        // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
+        if (err.response?.status === 403) {
+            localStorage.removeItem("tokenAutovibe");
+            if (dispatch) {
+                dispatch(logout());
+            }
+        }
+        return errorMessage;
+    }
+    return defaultMessage;
+};
+
 const createPost = createAsyncThunk<
     IPostResponse,
     FormData,
-    { rejectValue: string }
+    { rejectValue: string; dispatch: AppDispatch }
 >("post/createPost", async (formData, { rejectWithValue, dispatch }) => {
     try {
         const res = await myAxios.post<IPostResponse>(
@@ -58,23 +78,15 @@ const createPost = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("create post error", err);
-        let errorMessage = "Failed to create post. Please try later";
-        if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
-            // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
-            if (err.response?.status === 403) {
-                localStorage.removeItem("tokenAutovibe");
-                dispatch(logout());
-            }
-        }
-        return rejectWithValue(errorMessage);
+        const errorMessage = "Failed to create post. Please try again later";
+        return rejectWithValue(handleError(err, errorMessage, dispatch));
     }
 });
 
 const updatePostById = createAsyncThunk<
     IPostResponse,
     UpdatePostPayload,
-    { rejectValue: string }
+    { rejectValue: string; dispatch: AppDispatch }
 >(
     "post/updatePostById",
     async ({ postId, formData }, { rejectWithValue, dispatch }) => {
@@ -86,16 +98,8 @@ const updatePostById = createAsyncThunk<
             return res.data;
         } catch (err: unknown) {
             console.error("update post error", err);
-            let errorMessage = "Failed to update post. Please try later";
-            if (err instanceof AxiosError) {
-                errorMessage = err.response?.data?.message || errorMessage;
-                // Обрабатываем ошибку 403 (например, токен истёк или недействителен)
-                if (err.response?.status === 403) {
-                    localStorage.removeItem("tokenAutovibe");
-                    dispatch(logout());
-                }
-            }
-            return rejectWithValue(errorMessage);
+            const errorMessage = "Failed to update post. Please try later";
+            return rejectWithValue(handleError(err, errorMessage, dispatch));
         }
     }
 );
@@ -110,30 +114,24 @@ const getPostById = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("getPostById error", err);
-        let errorMessage = "Failed to get post. Please try again later.";
-        if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
-        }
-        return rejectWithValue(errorMessage);
+        const errorMessage = "Failed to get post. Please try again later.";
+        return rejectWithValue(handleError(err, errorMessage));
     }
 });
 
 const getMyPosts = createAsyncThunk<
     IPostResponse[],
     void,
-    { rejectValue: string }
->("post/getMyPosts", async (_, { rejectWithValue }) => {
+    { rejectValue: string; dispatch: AppDispatch }
+>("post/getMyPosts", async (_, { rejectWithValue, dispatch }) => {
     try {
         const res = await myAxios.get("/post/my-posts");
         console.log("get my posts", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("get my posts error", err);
-        let errorMessage = "Get my posts failed. Please try to later";
-        if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
-        }
-        return rejectWithValue(errorMessage);
+        const errorMessage = "Get my posts failed. Please try to later";
+        return rejectWithValue(handleError(err, errorMessage, dispatch));
     }
 });
 
@@ -148,29 +146,23 @@ const getPosts = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("get posts error", err);
-        let errorMessage = "Get posts failed. Please try to later";
-        if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
-        }
-        return rejectWithValue(errorMessage);
+        const errorMessage = "Get posts failed. Please try to later";
+        return rejectWithValue(handleError(err, errorMessage));
     }
 });
 
 const delPostById = createAsyncThunk<
     { message: string },
     string,
-    { rejectValue: string }
->("post/delPostById", async (postId, { rejectWithValue }) => {
+    { rejectValue: string; dispatch: AppDispatch }
+>("post/delPostById", async (postId, { rejectWithValue, dispatch }) => {
     try {
         const res = await myAxios.delete(`/post/${postId}`);
         return res.data;
     } catch (err: unknown) {
         console.error("delPostById error", err);
-        let errorMessage = "Failed to delete post. Please try again later.";
-        if (err instanceof AxiosError) {
-            errorMessage = err.response?.data?.message || errorMessage;
-        }
-        return rejectWithValue(errorMessage);
+        const errorMessage = "Failed to delete post. Please try again later.";
+        return rejectWithValue(handleError(err, errorMessage, dispatch));
     }
 });
 

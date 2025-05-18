@@ -142,7 +142,7 @@ const EditPostPage = () => {
                 setNewImgURL(null);
                 setImg(null);
                 reset();
-                toast.success("Post successfully updated!");
+                toast.success("Post was successfully updated!");
                 navigate("/my-posts");
             } else {
                 throw new Error("Post ID not found");
