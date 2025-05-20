@@ -103,6 +103,9 @@
 :global(.w-md-editor-text) {
     min-height: 100% !important;
 }
+:global(.w-md-editor) {
+    --md-editor-box-shadow-color: transparent !important;
+}
 
 :global(.w-md-editor-area::selection) {
     background-color: var(--color-header-bg);

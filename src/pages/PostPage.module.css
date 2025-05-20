@@ -1,8 +1,9 @@
 .post {
     transition-duration: 0.3s;
     font-size: 14px;
+    margin-bottom: 20px;
 }
-.post__wrapper {
+.post__body {
     max-width: 768px;
     margin: 0 auto;
     background-color: var(--color-card-bg);

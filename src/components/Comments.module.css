@@ -1,0 +1,167 @@
+.comments {
+}
+
+.comments__body {
+    max-width: 768px;
+    margin: 0 auto;
+    background-color: var(--color-card-bg);
+    padding: 15px;
+}
+
+.comments__title {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.commentCreate {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.commentCreate__avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-body-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.commentCreate__form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+}
+
+.commentCreate__textarea {
+    font-family: var(--font-main);
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid #ffffff80;
+    outline: none;
+    color: var(--color-primary);
+    font-size: 16px;
+    caret-color: var(--color-primary);
+    letter-spacing: 1.2px;
+    resize: none;
+    scrollbar-color: #ffffff80 #2b2a2a;
+}
+.commentCreate__textarea::selection {
+    background-color: var(--color-header-bg);
+}
+.commentCreate__textarea:focus {
+    border-color: var(--color-button);
+}
+.commentCreate__textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-card-bg) inset !important;
+    -webkit-text-fill-color: var(--color-primary) !important;
+    border: 1px solid var(--color-button) !important;
+}
+
+.commentCreate__btn {
+    background-color: var(--color-button);
+    padding: 10px;
+    color: var(--color-primary);
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 700;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+@media (hover: hover) {
+    .commentCreate__btn:hover {
+        background-color: var(--color-btn-hover);
+    }
+}
+
+.commentCreate__error {
+    background-color: var(--color-body-bg);
+    padding: 35px 15px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    border: 1px solid red;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.commentList {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.comment {
+    display: flex;
+    gap: 15px;
+}
+
+.comment__avatarBox {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment__avatar {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-body-bg);
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment__content {
+    max-width: 100%;
+    flex: 1;
+    border: 1px solid #ffffff80;
+}
+
+.comment__authorEmail {
+    font-weight: bold;
+    color: var(--color-primary);
+    background-color: var(--color-body-bg);
+    padding: 10px;
+}
+
+.comment__text {
+    color: var(--color-primary);
+    font-size: 16px;
+    line-height: 1.4;
+    padding: 10px;
+    /* border-bottom: 1px solid #ffffff80;
+    border-left: 1px solid #ffffff80;
+    border-right: 1px solid #ffffff80; */
+}
+@media (max-width: 480px) {
+    .commentCreate__avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    .comment__avatar {
+        width: 50px;
+        height: 50px;
+    }
+    .comment__avatarBox {
+        width: auto;
+    }
+}
