@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./Comments.module.css";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { createComment } from "../redux/comment/commentSlice";
+import { useParams } from "react-router-dom";
 
 const Comments = () => {
     const user = useAppSelector((state) => state.auth.user);
     const [comment, setComment] = useState("");
     const [error, setError] = useState(false);
     const errorTimerRef = useRef<number | undefined>(undefined);
+    const { id: postId } = useParams();
+
+    const dispatch = useAppDispatch();
 
     const addComment = () => {
         if (comment.trim() === "") {
@@ -19,6 +24,10 @@ const Comments = () => {
         }
 
         // Здесь отправка комментария
+        if (postId) {
+            dispatch(createComment({ comment, postId }));
+        }
+
         console.log("Комментарий отправлен:", comment);
         setComment("");
     };

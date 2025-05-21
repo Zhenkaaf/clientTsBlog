@@ -32,14 +32,19 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const deletePost = async () => {
+        setIsLoading(true);
         try {
             const data = await dispatch(delPostById(post._id)).unwrap();
             toast.success(data.message);
-            setIsDeleteModalOpen(false);
         } catch (err: any) {
             console.error("Error:", err);
             toast.error(err);
+        } finally {
+            setIsLoading(false);
+            setIsDeleteModalOpen(false);
         }
     };
     return (
@@ -109,6 +114,7 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
                     title="Delete Post"
                     confirmText="Yes, delete"
                     cancelText="Cancel"
+                    isLoading={isLoading}
                 >
                     Are you sure you want to delete this post?
                 </Modal>

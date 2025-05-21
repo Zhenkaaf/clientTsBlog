@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Spinner from "../components/Spinner";
 import s from "./Modal.module.css";
 
 interface ModalProps {
@@ -9,6 +10,7 @@ interface ModalProps {
     children?: React.ReactNode;
     confirmText?: string;
     cancelText?: string;
+    isLoading?: boolean;
 }
 
 const Modal = ({
@@ -19,6 +21,7 @@ const Modal = ({
     children,
     confirmText = "Yes",
     cancelText = "Cancel",
+    isLoading,
 }: ModalProps) => {
     useEffect(() => {
         if (!isOpen) return;
@@ -34,7 +37,7 @@ const Modal = ({
     }, [isOpen, onClose]);
 
     if (!isOpen) return null;
-
+    if (isLoading) return <Spinner />;
     return (
         <div className={s.modalOverlay} onClick={onClose}>
             <div className={s.modal} onClick={(e) => e.stopPropagation()}>

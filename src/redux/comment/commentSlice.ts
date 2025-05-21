@@ -26,6 +26,10 @@ interface ICommentsState {
     isLoading: boolean;
     commentsErrTxt: string | null;
 }
+interface ICommentPayload {
+    comment: string;
+    postId: string;
+}
 
 const initialState: ICommentsState = {
     comments: [],
@@ -54,21 +58,29 @@ const handleError = (
 
 const createComment = createAsyncThunk<
     ICommentResponse,
-    FormData,
+    ICommentPayload,
     { rejectValue: string; dispatch: AppDispatch }
->("post/createPost", async (formData, { rejectWithValue, dispatch }) => {
-    try {
-        const res = await myAxios.post<ICommentResponse>(
-            "/post/create-post",
-            formData
-        );
-        return res.data;
-    } catch (err: unknown) {
-        console.error("create post error", err);
-        const errorMessage = "Failed to create post. Please try again later";
-        return rejectWithValue(handleError(err, errorMessage, dispatch));
+>(
+    "comment/createComment",
+    async ({ comment, postId }, { rejectWithValue, dispatch }) => {
+        try {
+            const res = await myAxios.post<ICommentResponse>(
+                "/comment/add-comment",
+                {
+                    comment,
+                    postId,
+                }
+            );
+            console.log(res.data);
+            return res.data;
+        } catch (err: unknown) {
+            console.error("add comment error", err);
+            const errorMessage =
+                "Failed to add comment. Please try again later";
+            return rejectWithValue(handleError(err, errorMessage, dispatch));
+        }
     }
-});
+);
 
 const getComments = createAsyncThunk<
     ICommentsResponse,
