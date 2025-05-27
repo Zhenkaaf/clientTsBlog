@@ -1,18 +1,6 @@
+import { IPostResponse } from "../types";
 import Post from "./Post";
 import s from "./Posts.module.css";
-
-interface IPostResponse {
-    _id: string;
-    title: string;
-    text: string;
-    imgUrl: string;
-    views: number;
-    authorId: string;
-    comments: unknown[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
 
 interface IPostsProps {
     title: string;

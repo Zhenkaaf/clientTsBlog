@@ -5,26 +5,26 @@ import { clearCurrentPost, getPostById } from "../redux/post/postSlice";
 import Spinner from "../components/Spinner";
 import s from "./PostPage.module.css";
 import { formatDate } from "../utils/formatDate";
-import { Eye, MessageSquare } from "lucide-react";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeRaw from "rehype-raw";
 import Comments from "../components/Comments";
 
 const PostPage = () => {
-    const { id } = useParams();
+    const { id: postId } = useParams();
     const dispatch = useAppDispatch();
     const { currentPost: post, isLoading } = useAppSelector(
         (state) => state.post
     );
+    console.log(post);
 
     useEffect(() => {
-        if (id) {
-            dispatch(getPostById(id));
+        if (postId) {
+            dispatch(getPostById(postId));
         }
         return () => {
             dispatch(clearCurrentPost());
         };
-    }, [dispatch, id]);
+    }, [dispatch, postId]);
 
     return (
         <>
@@ -42,15 +42,18 @@ const PostPage = () => {
                         </div>
                         <div className={s.post__info}>
                             <div className={s.post__details}>
-                                <div className={s.post__stats}>
-                                    <div className={s.post__views}>
-                                        <Eye size={14} /> {post.views}
-                                    </div>
-                                    <div className={s.post__comments}>
-                                        <MessageSquare size={14} />{" "}
-                                        {post.comments.length}
-                                    </div>
+                                <div className={s.post__author}>
+                                    Author:{" "}
+                                    {post.author.email
+                                        .split("@")[0]
+                                        .slice(0, 24)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                        post.author.email
+                                            .split("@")[0]
+                                            .slice(1, 24)}
                                 </div>
+
                                 <time dateTime={post.createdAt}>
                                     {formatDate(post.createdAt)}
                                 </time>
@@ -70,12 +73,11 @@ const PostPage = () => {
                                 }}
                                 className={s.post__desc}
                             />
-                            {/*  <div className={s.post__desc}>{post.text}</div> */}
                         </div>
                     </div>
                 )}
             </div>
-            <Comments />
+            <Comments postId={postId} />
         </>
     );
 };

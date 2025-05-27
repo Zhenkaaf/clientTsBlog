@@ -3,31 +3,15 @@ import myAxios from "../../api/axios";
 import { AxiosError } from "axios";
 import { logout } from "../auth/authSlice";
 import { AppDispatch } from "../store";
-
-interface ICommentResponse {
-    _id: string;
-    title: string;
-    text: string;
-    imgUrl: string;
-    views: number;
-    authorId: string;
-    comments: unknown[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
-
-interface ICommentsResponse {
-    comments: ICommentResponse[];
-}
+import { IComment } from "../../types";
 
 interface ICommentsState {
-    comments: ICommentsResponse[];
+    comments: IComment[];
     isLoading: boolean;
     commentsErrTxt: string | null;
 }
 interface ICommentPayload {
-    comment: string;
+    commentText: string;
     postId: string;
 }
 
@@ -57,24 +41,24 @@ const handleError = (
 };
 
 const createComment = createAsyncThunk<
-    ICommentResponse,
+    { message: string },
     ICommentPayload,
     { rejectValue: string; dispatch: AppDispatch }
 >(
     "comment/createComment",
-    async ({ comment, postId }, { rejectWithValue, dispatch }) => {
+    async ({ commentText, postId }, { rejectWithValue, dispatch }) => {
         try {
-            const res = await myAxios.post<ICommentResponse>(
+            const res = await myAxios.post<{ message: string }>(
                 "/comment/add-comment",
                 {
-                    comment,
+                    commentText,
                     postId,
                 }
             );
-            console.log(res.data);
+
             return res.data;
         } catch (err: unknown) {
-            console.error("add comment error", err);
+            console.error("Add comment error", err);
             const errorMessage =
                 "Failed to add comment. Please try again later";
             return rejectWithValue(handleError(err, errorMessage, dispatch));
@@ -83,17 +67,19 @@ const createComment = createAsyncThunk<
 );
 
 const getComments = createAsyncThunk<
-    ICommentsResponse,
-    void,
-    { rejectValue: string }
->("post/getPosts", async (_, { rejectWithValue }) => {
+    IComment[],
+    string,
+    { rejectValue: string; dispatch: AppDispatch }
+>("comment/getComments", async (postId, { rejectWithValue }) => {
     try {
-        const res = await myAxios.get("/post/posts");
-        console.log("get posts", res.data);
+        const res = await myAxios.get<IComment[]>(
+            `/comment/comments/${postId}`
+        );
+
         return res.data;
     } catch (err: unknown) {
-        console.error("get posts error", err);
-        const errorMessage = "Get posts failed. Please try to later";
+        console.error("Add comment error", err);
+        const errorMessage = "Failed to add comment. Please try again later";
         return rejectWithValue(handleError(err, errorMessage));
     }
 });
@@ -101,7 +87,11 @@ const getComments = createAsyncThunk<
 const commentSlice = createSlice({
     name: "comment",
     initialState,
-    reducers: {},
+    reducers: {
+        clearComments: (state) => {
+            state.comments = [];
+        },
+    },
     extraReducers: (builder) => {
         builder
             //CREATE COMMENT
@@ -109,9 +99,8 @@ const commentSlice = createSlice({
                 state.isLoading = true;
                 state.commentsErrTxt = null;
             })
-            .addCase(createComment.fulfilled, (state, action) => {
+            .addCase(createComment.fulfilled, (state) => {
                 state.isLoading = false;
-                state.posts = [...state.posts, action.payload];
             })
             .addCase(createComment.rejected, (state, action) => {
                 state.isLoading = false;
@@ -123,7 +112,7 @@ const commentSlice = createSlice({
             })
             .addCase(getComments.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.posts = action.payload.posts;
+                state.comments = action.payload;
             })
             .addCase(getComments.rejected, (state, action) => {
                 state.isLoading = false;
@@ -132,5 +121,6 @@ const commentSlice = createSlice({
     },
 });
 
+export const { clearComments } = commentSlice.actions;
 export { createComment, getComments };
 export default commentSlice.reducer;

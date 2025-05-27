@@ -5,6 +5,7 @@ import { IFormInputs } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerUser, resetEmailError } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const RegisterPage = () => {
     const {
@@ -25,12 +26,19 @@ const RegisterPage = () => {
             const res = await dispatch(registerUser(data)).unwrap();
             toast.success(`${res.message}`);
             reset();
-            navigate("/create-post");
+            navigate("/my-posts");
         } catch (err: any) {
             console.error("Registration error:", err);
             toast.error(err[Object.keys(err)[0]]);
         }
     };
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetEmailError());
+        };
+    }, [dispatch]);
+
     return (
         <div className={s.register}>
             <form

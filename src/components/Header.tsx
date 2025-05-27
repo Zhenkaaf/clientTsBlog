@@ -6,6 +6,7 @@ import { logout } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import Modal from "./Modal";
+import { clearMyPosts } from "../redux/post/postSlice";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ export const Header = () => {
     };
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearMyPosts());
         localStorage.removeItem("tokenAutovibe");
         toast.success("You have logged out! See you soon! 👋");
         setIsLogoutModalOpen(false);

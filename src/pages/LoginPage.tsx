@@ -8,6 +8,7 @@ import {
     resetEmailError,
     resetPasswordError,
 } from "../redux/auth/authSlice";
+import { useEffect } from "react";
 
 interface IFormInputs {
     email: string;
@@ -40,7 +41,11 @@ const LoginPage = () => {
             console.error("Login error:", err);
         }
     };
-
+    useEffect(() => {
+        return () => {
+            dispatch(resetEmailError());
+        };
+    }, [dispatch]);
     return (
         <section className={s.login}>
             <form

@@ -8,19 +8,8 @@ import { delPostById } from "../redux/post/postSlice";
 import { useAppDispatch } from "../redux/hooks";
 import toast from "react-hot-toast";
 import Modal from "./Modal";
+import { IPostResponse } from "../types";
 
-interface IPostResponse {
-    _id: string;
-    title: string;
-    text: string;
-    imgUrl: string;
-    views: number;
-    authorId: string;
-    comments: unknown[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
 interface IPostProps {
     post: IPostResponse;
     isOwnerView: boolean;
@@ -88,10 +77,14 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
                     <div className={s.post__details}>
                         <div className={s.post__stats}>
                             <div className={s.post__views}>
-                                <Eye size={14} /> {post.views}
+                                <Eye size={14} style={{ marginTop: "-2px" }} />{" "}
+                                {post.views}
                             </div>
                             <div className={s.post__comments}>
-                                <MessageSquare size={14} />{" "}
+                                <MessageSquare
+                                    size={14}
+                                    style={{ marginTop: "-2px" }}
+                                />{" "}
                                 {post.comments.length}
                             </div>
                         </div>

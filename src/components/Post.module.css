@@ -88,13 +88,13 @@
 
 .post__views {
     display: flex;
-    gap: 2px;
+    gap: 4px;
     align-items: center;
 }
 
 .post__comments {
     display: flex;
-    gap: 2px;
+    gap: 4px;
     align-items: center;
 }
 

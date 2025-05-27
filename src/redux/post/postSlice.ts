@@ -3,21 +3,9 @@ import myAxios from "../../api/axios";
 import { AxiosError } from "axios";
 import { logout } from "../auth/authSlice";
 import { AppDispatch } from "../store";
+import { IPostResponse, IPostResponsePopulated } from "../../types";
 
-interface IPostResponse {
-    _id: string;
-    title: string;
-    text: string;
-    imgUrl: string;
-    views: number;
-    authorId: string;
-    comments: unknown[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
-
-interface IPostsResponse {
+interface IPostsResponseGeneral {
     posts: IPostResponse[];
     popularPosts: IPostResponse[];
 }
@@ -26,7 +14,7 @@ interface IPostsState {
     posts: IPostResponse[];
     popularPosts: IPostResponse[];
     myPosts: IPostResponse[];
-    currentPost: IPostResponse | null;
+    currentPost: IPostResponsePopulated | null;
     isFetchedMyPosts: boolean;
     isLoading: boolean;
     postErrTxt: string | null;
@@ -105,7 +93,7 @@ const updatePostById = createAsyncThunk<
 );
 
 const getPostById = createAsyncThunk<
-    IPostResponse,
+    IPostResponsePopulated,
     string,
     { rejectValue: string }
 >("post/getPostById", async (postId, { rejectWithValue }) => {
@@ -136,7 +124,7 @@ const getMyPosts = createAsyncThunk<
 });
 
 const getPosts = createAsyncThunk<
-    IPostsResponse,
+    IPostsResponseGeneral,
     void,
     { rejectValue: string }
 >("post/getPosts", async (_, { rejectWithValue }) => {
@@ -172,6 +160,10 @@ const postSlice = createSlice({
     reducers: {
         clearCurrentPost(state) {
             state.currentPost = null;
+        },
+        clearMyPosts: (state) => {
+            state.myPosts = [];
+            state.isFetchedMyPosts = false;
         },
     },
     extraReducers: (builder) => {
@@ -261,7 +253,7 @@ const postSlice = createSlice({
     },
 });
 
-export const { clearCurrentPost } = postSlice.actions;
+export const { clearCurrentPost, clearMyPosts } = postSlice.actions;
 export {
     createPost,
     getMyPosts,
