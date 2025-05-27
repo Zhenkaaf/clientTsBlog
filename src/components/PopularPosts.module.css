@@ -44,38 +44,33 @@
     transition-duration: 0.3s;
     object-fit: cover;
 }
-.post__info {
+.post__details {
     background-color: var(--color-secondary);
-    padding: 6px 12px 0px;
+    padding: 2px 12px 0px;
     display: inline-block;
     position: absolute;
     bottom: 15px;
     z-index: 1;
-    cursor: pointer;
-    transition-duration: 0.3s;
+    /*  min-width: 180px; */
 }
 
-.post__info:hover {
-    background-color: var(--color-btn-hover);
+@media (hover: hover) {
+    .post__details:hover {
+        background-color: var(--color-btn-hover);
+    }
 }
-.post__infoIconEye {
-    padding-top: 3px;
+
+.post__detailIcon {
+    margin-left: 10px;
+    margin-top: 2px;
 }
-.post__infoViews {
+.post__detailItem {
     display: flex;
     align-items: center;
-    /*  gap: 10px; */
 }
 .post__infoTitle {
 }
-.post__infoArrowLine {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.post__infoIcon {
-    margin-top: 3px;
-}
+
 @media (max-width: 768px) {
     .popular__body {
         display: grid;

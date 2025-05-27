@@ -1,6 +1,7 @@
 import { Eye, MoveRight } from "lucide-react";
 import { IPostResponse } from "../types";
 import s from "./PopularPosts.module.css";
+import { Link } from "react-router-dom";
 
 interface IPostsProps {
     popularPosts: IPostResponse[];
@@ -14,77 +15,113 @@ const PopularPosts = ({ popularPosts }: IPostsProps) => {
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            /*  src="https://a.d-cd.net/fF_9ImAA9Tq13W5FKVfVidI4lb8-1920.jpg" */
                             src={popularPosts[0].imgUrl}
                             alt="Post Image"
                         />
                     </div>
 
-                    <div className={s.post__info}>
-                        <p>
-                            {" "}
-                            Popular post{" "}
-                            <span className={s.post__infoIconEye}>
-                                <Eye size={14} />{" "}
+                    <Link
+                        className={`${s.post__details} link`}
+                        to={`/post/${popularPosts[0]._id}`}
+                    >
+                        <div className={s.post__detailItem}>
+                            <p>Popular post</p>
+                            <span className={s.post__detailIcon}>
+                                <Eye size={16} />
                             </span>
-                            {popularPosts[0].views}{" "}
-                        </p>
-                        <div className={s.post__infoArrowLine}>
-                            <p> Read </p>
-                            <span className={s.post__infoIcon}>
+                            {popularPosts[0].views}
+                        </div>
+                        <div className={s.post__detailItem}>
+                            <p>Read</p>
+                            <span className={s.post__detailIcon}>
                                 <MoveRight />
                             </span>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className={`${s.popular__middle} ${s.post}`}>
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            src="https://a.d-cd.net/UAAAAgBGaeA-960.jpg"
+                            src={popularPosts[1].imgUrl}
                             alt="Post Image"
                         />
                     </div>
-                    <div className={s.post__info}>
-                        <h3 className={s.post__title}>Popular</h3>
-                        <time className={s.post__date} dateTime="2025-03-12">
-                            12 March 2025
-                        </time>
-                    </div>
+                    <Link
+                        className={`${s.post__details} link`}
+                        to={`/post/${popularPosts[1]._id}`}
+                    >
+                        <div className={s.post__detailItem}>
+                            <p>Popular post</p>
+                            <span className={s.post__detailIcon}>
+                                <Eye size={16} />
+                            </span>
+                            {popularPosts[1].views}
+                        </div>
+                        <div className={s.post__detailItem}>
+                            <p>Read</p>
+                            <span className={s.post__detailIcon}>
+                                <MoveRight />
+                            </span>
+                        </div>
+                    </Link>
                 </div>
 
                 <div className={`${s.popular__small1} ${s.post}`}>
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            src="https://i.pinimg.com/736x/6a/36/d3/6a36d3dfcea2b870ab2f5d4513af87b8.jpg"
+                            src={popularPosts[2].imgUrl}
                             alt="Post Image"
                         />
                     </div>
-                    <div className={s.post__info}>
-                        <h3 className={s.post__title}>Popular</h3>
-                        <time className={s.post__date} dateTime="2025-03-12">
-                            12 March 2025
-                        </time>
-                    </div>
+                    <Link
+                        className={`${s.post__details} link`}
+                        to={`/post/${popularPosts[2]._id}`}
+                    >
+                        <div className={s.post__detailItem}>
+                            <p>Popular post</p>
+                            <span className={s.post__detailIcon}>
+                                <Eye size={16} />
+                            </span>
+                            {popularPosts[2].views}
+                        </div>
+                        <div className={s.post__detailItem}>
+                            <p>Read</p>
+                            <span className={s.post__detailIcon}>
+                                <MoveRight />
+                            </span>
+                        </div>
+                    </Link>
                 </div>
 
                 <div className={`${s.popular__small2} ${s.post}`}>
                     <div className={s.post__imageWrapper}>
                         <img
                             className={s.post__img}
-                            /*  src="https://i.pinimg.com/736x/7e/1f/52/7e1f5204cd468f3708679dbb2ce9e894.jpg" */
-                            src="https://res.cloudinary.com/dvc3dexbz/image/upload/v1748253979/avtovibe_images/file_ducyaw.jpg"
+                            src={popularPosts[3].imgUrl}
                             alt="Post Image"
                         />
                     </div>
-                    <div className={s.post__info}>
-                        <h3 className={s.post__title}>Popular</h3>
-                        <time className={s.post__date} dateTime="2025-03-12">
-                            12 March 2025
-                        </time>
-                    </div>
+                    <Link
+                        className={`${s.post__details} link`}
+                        to={`/post/${popularPosts[3]._id}`}
+                    >
+                        <div className={s.post__detailItem}>
+                            <p>Popular post</p>
+                            <span className={s.post__detailIcon}>
+                                <Eye size={16} />
+                            </span>
+                            {popularPosts[3].views}
+                        </div>
+                        <div className={s.post__detailItem}>
+                            <p>Read</p>
+                            <span className={s.post__detailIcon}>
+                                <MoveRight />
+                            </span>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </section>
