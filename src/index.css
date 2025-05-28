@@ -38,6 +38,7 @@ h6 {
     --color-btn-hover: rgb(77, 77, 250);
     --color-shadow: rgba(255, 0, 0, 0.2);
     --color-hover: #fff3;
+    --color-border: #999999;
     --color-overlay-bg: rgba(0, 0, 0, 0.6);
     --header-height: 60px;
 }

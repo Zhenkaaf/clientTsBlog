@@ -3,8 +3,8 @@ import axios from "axios";
 import { logout } from "../redux/auth/authSlice";
  */
 const instance = axios.create({
-    baseURL: "http://localhost:5000/api",
-    /* baseURL: "https://serverexpresstsblog.onrender.com/api", */
+    /*  baseURL: "http://localhost:5000/api", */
+    baseURL: "https://serverexpresstsblog.onrender.com/api",
 });
 
 // 📤 Добавляем токен ко всем запросам

@@ -29,7 +29,7 @@ const HomePage = () => {
                 speed={50}
                 pause={3000}
             />
-            {popularPosts.length && (
+            {popularPosts.length > 0 && (
                 <PopularPosts popularPosts={popularPosts} />
             )}
             <Posts title={"Posts"} posts={posts} isOwnerView={false} />

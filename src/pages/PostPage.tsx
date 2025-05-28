@@ -77,7 +77,7 @@ const PostPage = () => {
                     </div>
                 )}
             </div>
-            <Comments postId={postId} />
+            {post && <Comments postId={postId} />}
         </>
     );
 };

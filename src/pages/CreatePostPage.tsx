@@ -125,7 +125,7 @@ const CreatePostPage = () => {
                     }`}
                     htmlFor="choosePhoto"
                 >
-                    Choose photo (Max 8MB, JPG/PNG only)
+                    Choose photo (Max 8MB, JPG/PNG)
                 </label>
                 <input
                     className="visuallyHidden"
