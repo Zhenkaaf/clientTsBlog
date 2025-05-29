@@ -96,30 +96,3 @@ body._lock {
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
-
-.footer {
-    background-color: antiquewhite;
-}
-
-/**********************************************************/
-
-/*     --theme-page: #171717;
-    --theme-page-modal: #000;
-    --theme-page-modal-shadow: #111;
-    --theme-page-modal-bg: #080808f2;
-    --theme-card: #222;
-    --theme-primary-card: #222;
-    --theme-secondary-card: #333;
-    --theme-tappable: #ffffff26;
-    --theme-delimiter: #ffffff26;
-    --theme-hover: #fff3;
-    --theme-hover-card: #ffffff14;
-    --theme-primary: #fffffff2;
-    --theme-primary-inv: #333;
-    --theme-secondary: #ffffff80;
-    --theme-secondary-offset: #fffffe80;
-    --theme-tertiary: #fff3;
-    --theme-secondary-icon: #ffffff80;
-    --theme-disabled: #ffffff4d;
-    --theme-disabled-opacity: .6;
-    --theme-symbols-hover: #fff; */

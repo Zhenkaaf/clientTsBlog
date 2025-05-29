@@ -1,0 +1,12 @@
+.footer {
+    background-color: var(--color-header-bg);
+    box-shadow: 0 -4px 10px var(--color-shadow);
+    min-height: var(--header-height);
+    margin-top: 30px;
+}
+.footer__body {
+    display: flex;
+    height: var(--header-height);
+    align-items: center;
+    justify-content: center;
+}
