@@ -12,9 +12,9 @@ export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const dispatch = useAppDispatch();
-
     const user = useAppSelector((state) => state.auth.user);
     const isLoading = useAppSelector((state) => state.auth.isLoading);
+
     const openCloseMobMenu = () => {
         setIsMenuOpen((prev) => !prev);
     };
@@ -42,12 +42,20 @@ export const Header = () => {
                 <div className="container">
                     <div className={s.header__body}>
                         <div className={s.header__left}>
-                            <Link to="/" className={`${s.header__logo} link`}>
+                            <Link
+                                to="/"
+                                className={`${s.header__logo} link`}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
                                 AutoVibe
                             </Link>
 
                             {user && (
-                                <Link to="/my-posts" className="link">
+                                <Link
+                                    to="/my-posts"
+                                    className="link"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
                                     <div className={s.header__user}>
                                         <svg
                                             viewBox="0 0 512.000000 422.000000"

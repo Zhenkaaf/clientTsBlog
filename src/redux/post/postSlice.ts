@@ -8,6 +8,7 @@ import { IPostResponse, IPostResponsePopulated } from "../../types";
 interface IPostsResponseGeneral {
     posts: IPostResponse[];
     popularPosts: IPostResponse[];
+    totalPages: number;
 }
 
 interface IPostsState {
@@ -18,6 +19,7 @@ interface IPostsState {
     isFetchedMyPosts: boolean;
     isLoading: boolean;
     postErrTxt: string | null;
+    pageQty: number;
 }
 interface UpdatePostPayload {
     postId: string;
@@ -32,6 +34,7 @@ const initialState: IPostsState = {
     isFetchedMyPosts: false,
     isLoading: false,
     postErrTxt: null,
+    pageQty: 0,
 };
 
 const handleError = (
@@ -125,11 +128,13 @@ const getMyPosts = createAsyncThunk<
 
 const getPosts = createAsyncThunk<
     IPostsResponseGeneral,
-    void,
+    { page: number },
     { rejectValue: string }
->("post/getPosts", async (_, { rejectWithValue }) => {
+>("post/getPosts", async ({ page }, { rejectWithValue }) => {
     try {
-        const res = await myAxios.get("/post/posts");
+        const res = await myAxios.get("/post/posts", {
+            params: { page: page },
+        });
         console.log("get posts", res.data);
         return res.data;
     } catch (err: unknown) {
@@ -220,6 +225,7 @@ const postSlice = createSlice({
                 state.isLoading = false;
                 state.posts = action.payload.posts;
                 state.popularPosts = action.payload.popularPosts;
+                state.pageQty = action.payload.totalPages;
             })
             .addCase(getPosts.rejected, (state, action) => {
                 state.isLoading = false;

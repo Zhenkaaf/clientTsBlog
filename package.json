@@ -12,6 +12,9 @@
         "deploy": "npm run build && gh-pages -d dist"
     },
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/material": "^7.1.1",
         "@reduxjs/toolkit": "^2.6.1",
         "@uiw/react-md-editor": "^4.0.6",
         "axios": "^1.8.4",

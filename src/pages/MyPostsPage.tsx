@@ -23,7 +23,7 @@ const MyPostsPage = () => {
             {isLoading && <Spinner />}
             {myPosts.length > 0 ? (
                 <Posts title={"My posts"} posts={myPosts} isOwnerView={true} />
-            ) : (
+            ) : isFetchedMyPosts ? (
                 <div className={s.noPosts}>
                     <p className={s.noPosts__text}>
                         You don't have any posts yet
@@ -32,6 +32,8 @@ const MyPostsPage = () => {
                         Create Post
                     </Link>
                 </div>
+            ) : (
+                ""
             )}
         </div>
     );
