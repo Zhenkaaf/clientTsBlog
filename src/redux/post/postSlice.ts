@@ -128,12 +128,12 @@ const getMyPosts = createAsyncThunk<
 
 const getPosts = createAsyncThunk<
     IPostsResponseGeneral,
-    { page: number },
+    { pageNumber: number },
     { rejectValue: string }
->("post/getPosts", async ({ page }, { rejectWithValue }) => {
+>("post/getPosts", async ({ pageNumber }, { rejectWithValue }) => {
     try {
         const res = await myAxios.get("/post/posts", {
-            params: { page: page },
+            params: { page: pageNumber },
         });
         console.log("get posts", res.data);
         return res.data;

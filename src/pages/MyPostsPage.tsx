@@ -13,6 +13,7 @@ const MyPostsPage = () => {
     );
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (!isFetchedMyPosts) {
             dispatch(getMyPosts());
         }

@@ -6,20 +6,37 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { getPosts } from "../redux/post/postSlice";
 import Spinner from "../components/Spinner";
 import CustomPagination from "../components/CustomPagination";
+import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
+    const { search } = useLocation();
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.post.isLoading);
     const posts = useAppSelector((state) => state.post.posts);
     const popularPosts = useAppSelector((state) => state.post.popularPosts);
     const pageQty = useAppSelector((state) => state.post.pageQty);
-    const [page, setPage] = useState(1);
     const postsRef = useRef<HTMLDivElement>(null);
+    const [pageNumber, setPageNumber] = useState(
+        parseInt(search?.split("=")[1]) || 1
+    );
 
     useEffect(() => {
-        dispatch(getPosts({ page }));
-        postsRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [dispatch, page]);
+        const params = new URLSearchParams(search);
+        const pageNumberFromUrl = parseInt(params.get("page") || "1");
+        setPageNumber(pageNumberFromUrl);
+    }, [search]);
+
+    useEffect(() => {
+        dispatch(getPosts({ pageNumber }));
+        if (postsRef.current) {
+            const offsetTop =
+                postsRef.current.getBoundingClientRect().top + window.scrollY;
+            const isMobile = window.innerWidth <= 768;
+            const offset = isMobile ? 60 : 0;
+            window.scrollTo({ top: offsetTop - offset, behavior: "smooth" });
+        }
+        // postsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [dispatch, pageNumber]);
 
     return (
         <div>
@@ -49,8 +66,8 @@ const HomePage = () => {
 
                     <CustomPagination
                         pageQty={pageQty}
-                        page={page}
-                        setPage={setPage}
+                        pageNumber={pageNumber}
+                        setPageNumber={setPageNumber}
                     />
                 </>
             )}

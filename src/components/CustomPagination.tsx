@@ -1,14 +1,16 @@
-import { Pagination, Stack } from "@mui/material";
+import { Pagination, Stack, PaginationItem } from "@mui/material";
+import { Link } from "react-router-dom";
 interface ICustomPaginationProps {
     pageQty: number;
-    page: number;
-    setPage: (value: number) => void;
+    pageNumber: number;
+    setPageNumber: (value: number) => void;
 }
 const CustomPagination = ({
     pageQty,
-    page,
-    setPage,
+    pageNumber,
+    setPageNumber,
 }: ICustomPaginationProps) => {
+    console.log("pageNumber", pageNumber);
     return (
         <div className="container">
             <Stack alignItems="center" mt={4}>
@@ -17,8 +19,15 @@ const CustomPagination = ({
                         variant="outlined"
                         shape="rounded"
                         count={pageQty}
-                        page={page}
-                        onChange={(_, num) => setPage(num)}
+                        page={pageNumber}
+                        onChange={(_, num) => setPageNumber(num)}
+                        renderItem={(item) => (
+                            <PaginationItem
+                                component={Link}
+                                to={`/?page=${item.page}`}
+                                {...item}
+                            />
+                        )}
                         sx={{
                             "& .MuiPaginationItem-root": {
                                 color: "#ccc", // цвет неактивных номеров
@@ -30,9 +39,6 @@ const CustomPagination = ({
                             },
                             "& .MuiPaginationItem-root.Mui-selected": {
                                 backgroundColor: "#fff3", // цвет активного номера
-                            },
-                            "& .Mui-selected": {
-                                backgroundColor: "#333",
                             },
                         }}
                     />
