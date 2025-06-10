@@ -28,10 +28,13 @@ const HomePage = () => {
 
     useEffect(() => {
         dispatch(getPosts({ pageNumber }));
-        if (postsRef.current) {
+        const isMobile = window.innerWidth <= 768;
+        if (pageNumber === 1) {
+            // Скролл в самый верх
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (postsRef.current) {
             const offsetTop =
                 postsRef.current.getBoundingClientRect().top + window.scrollY;
-            const isMobile = window.innerWidth <= 768;
             const offset = isMobile ? 60 : 0;
             window.scrollTo({ top: offsetTop - offset, behavior: "smooth" });
         }
