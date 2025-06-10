@@ -18,6 +18,7 @@ const CustomPagination = ({
                     <Pagination
                         variant="outlined"
                         shape="rounded"
+                        siblingCount={0}
                         count={pageQty}
                         page={pageNumber}
                         onChange={(_, num) => setPageNumber(num)}
@@ -32,13 +33,19 @@ const CustomPagination = ({
                             "& .MuiPaginationItem-root": {
                                 color: "#ccc", // цвет неактивных номеров
                                 borderRadius: 0,
+                                margin: "0 8px",
                                 border: "1px solid #fff3",
-                                "&:hover": {
-                                    backgroundColor: "#fff3", // цвет фона при ховере
+                                "@media (hover: hover) and (pointer: fine)": {
+                                    "&:hover": {
+                                        backgroundColor: "#fff3", // цвет фона при ховере
+                                    },
                                 },
                             },
                             "& .MuiPaginationItem-root.Mui-selected": {
-                                backgroundColor: "#fff3", // цвет активного номера
+                                backgroundColor: "#fff3 !important", // цвет активного номера
+                            },
+                            "& .MuiPaginationItem-ellipsis": {
+                                border: "none",
                             },
                         }}
                     />
