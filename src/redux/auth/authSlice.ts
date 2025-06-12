@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import myAxios from "../../api/axios";
 import { IUserInfo } from "../../types";
 import { AxiosError } from "axios";
 
 interface IAuthState {
     user: IUserInfo | null;
+    token: string | null;
     isLoading: boolean;
     isProfileChecked: boolean;
     emailErrTxt: string | null;
@@ -23,6 +24,7 @@ interface IAuthUserResponse {
 
 const initialState: IAuthState = {
     user: null,
+    token: null,
     isLoading: false,
     isProfileChecked: false,
     emailErrTxt: null,
@@ -105,6 +107,11 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.isProfileChecked = true;
             state.user = null;
+            state.token = null;
+        },
+        setAuthToken: (state, action: PayloadAction<{ token: string }>) => {
+            console.log("setAuthToken***", action.payload);
+            state.token = action.payload.token;
         },
         setProfileChecked(state) {
             state.isProfileChecked = true;
@@ -125,6 +132,7 @@ const authSlice = createSlice({
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = action.payload.userInfo;
+                state.token = action.payload.token;
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.isLoading = false;
@@ -139,6 +147,7 @@ const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = action.payload.userInfo;
+                state.token = action.payload.token;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
@@ -157,6 +166,8 @@ const authSlice = createSlice({
             .addCase(getProfile.rejected, (state) => {
                 state.isLoading = false;
                 state.isProfileChecked = true;
+                state.user = null;
+                state.token = null;
             });
     },
 });
@@ -164,6 +175,7 @@ const authSlice = createSlice({
 export const {
     logout,
     setProfileChecked,
+    setAuthToken,
     resetEmailError,
     resetPasswordError,
 } = authSlice.actions;

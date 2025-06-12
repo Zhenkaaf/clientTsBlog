@@ -12,8 +12,6 @@ import MyPostsPage from "./pages/MyPostsPage";
 import PostPage from "./pages/PostPage";
 
 function App() {
-    console.log("appRerender");
-
     useInitProfile();
 
     return (

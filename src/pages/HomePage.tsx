@@ -30,7 +30,6 @@ const HomePage = () => {
         dispatch(getPosts({ pageNumber }));
         const isMobile = window.innerWidth <= 768;
         if (pageNumber === 1) {
-            // Скролл в самый верх
             window.scrollTo({ top: 0, behavior: "smooth" });
         } else if (postsRef.current) {
             const offsetTop =
@@ -38,7 +37,6 @@ const HomePage = () => {
             const offset = isMobile ? 60 : 0;
             window.scrollTo({ top: offsetTop - offset, behavior: "smooth" });
         }
-        // postsRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [dispatch, pageNumber]);
 
     return (
