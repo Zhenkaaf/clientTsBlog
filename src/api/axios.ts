@@ -3,8 +3,8 @@ import axios from "axios";
 import { RootState } from "../redux/store";
 
 const myAxios = axios.create({
-    baseURL: "http://localhost:5000/api",
-    /*   baseURL: "https://serverexpresstsblog.onrender.com/api", */
+    /*  baseURL: "http://localhost:5000/api", */
+    baseURL: "https://serverexpresstsblog.onrender.com/api",
 });
 
 // 📤 Добавляем токен ко всем запросам
