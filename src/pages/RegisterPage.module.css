@@ -15,6 +15,9 @@
     font-size: 32px;
     text-align: center;
 }
+.register__passwordWrapper {
+    position: relative;
+}
 .register__input {
     font-family: var(--font-main);
     padding: 10px;
@@ -29,6 +32,10 @@
     -webkit-appearance: none;
     appearance: none;
     box-shadow: none;
+    width: 100%;
+}
+.register__passwordWrapper .register__input {
+    padding-right: 45px;
 }
 .register__input::selection {
     background-color: var(--color-header-bg);
@@ -52,6 +59,18 @@
     font-weight: 700;
     transition-duration: 0.3s;
     cursor: pointer;
+}
+.register__togglePassword {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: var(--color-border);
+    position: absolute;
+    right: 12px;
+    bottom: 7px;
 }
 
 @media (hover: hover) {

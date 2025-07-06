@@ -5,7 +5,8 @@ import { IFormInputs } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerUser, resetEmailError } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const RegisterPage = () => {
     const {
@@ -16,6 +17,7 @@ const RegisterPage = () => {
         formState: { errors, isValid },
     } = useForm<IFormInputs>({ mode: "onBlur" });
 
+    const [showPassword, setShowPassword] = useState(false);
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.auth.isLoading);
     const navigate = useNavigate();
@@ -75,35 +77,46 @@ const RegisterPage = () => {
                             "Please check the field"}
                     </p>
                 )}
-
-                <label className="visuallyHidden" htmlFor="password">
-                    password
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Password"
-                    className={s.register__input}
-                    {...register("password", {
-                        required: "This field is required",
-                        minLength: {
-                            value: 6,
-                            message: "minimum 6 characters",
-                        },
-                        maxLength: {
-                            value: 20,
-                            message: "Maximum 20 characters",
-                        },
-                        pattern: {
-                            value: /^\S*$/,
-                            message: "Password can not contain spaces",
-                        },
-                    })}
-                    onInput={(e) => {
-                        const input = e.target as HTMLInputElement;
-                        input.value = input.value.replace(/\s/g, ""); // Убираем все пробелы
-                    }}
-                />
+                <div className={s.register__passwordWrapper}>
+                    <label className="visuallyHidden" htmlFor="password">
+                        password
+                    </label>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        placeholder="Password"
+                        className={s.register__input}
+                        {...register("password", {
+                            required: "This field is required",
+                            minLength: {
+                                value: 6,
+                                message: "minimum 6 characters",
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: "Maximum 20 characters",
+                            },
+                            pattern: {
+                                value: /^\S*$/,
+                                message: "Password can not contain spaces",
+                            },
+                        })}
+                        onInput={(e) => {
+                            const input = e.target as HTMLInputElement;
+                            input.value = input.value.replace(/\s/g, ""); // Убираем все пробелы
+                        }}
+                    />
+                    <button
+                        type="button"
+                        className={s.register__togglePassword}
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                        }
+                    >
+                        {showPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                </div>
                 {errors?.password && (
                     <p className={s.register__error}>
                         {errors.password?.message || "Please check the field"}
