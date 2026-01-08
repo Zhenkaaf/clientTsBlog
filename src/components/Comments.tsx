@@ -8,6 +8,7 @@ import {
 } from "../redux/comment/commentSlice";
 import Spinner from "./Spinner";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 interface ICommentsProps {
     postId: string | undefined;
@@ -72,6 +73,14 @@ const Comments = ({ postId }: ICommentsProps) => {
                 <h3 className={s.comments__title}>
                     {comments.length || 0} Comments
                 </h3>
+                {!user && (
+                    <p>
+                        To leave a comment, please{" "}
+                        <Link className={s.comments__link} to="/login">
+                            Log in
+                        </Link>
+                    </p>
+                )}
                 {user && (
                     <div className={s.commentCreate}>
                         <div className={s.commentCreate__avatar}>

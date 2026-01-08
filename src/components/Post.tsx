@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { MessageSquare, Eye, Trash2, Pencil } from "lucide-react";
 import { useState } from "react";
 import { formatDate } from "../utils/formatDate";
-import removeMarkdown from "remove-markdown";
 import { delPostById } from "../redux/post/postSlice";
 import { useAppDispatch } from "../redux/hooks";
+import { IPostResponse } from "../types";
 import toast from "react-hot-toast";
 import Modal from "./Modal";
-import { IPostResponse } from "../types";
+import removeMarkdown from "remove-markdown";
 
 interface IPostProps {
     post: IPostResponse;
@@ -16,7 +16,6 @@ interface IPostProps {
 }
 
 const Post = ({ post, isOwnerView }: IPostProps) => {
-    /*  console.log(post); */
     const [imgLoaded, setImgLoaded] = useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -67,9 +66,9 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
                     <img
                         src={post.imgUrl}
                         alt=""
-                        /*  className={s.post__image} */ className={`${
-                            s.post__image
-                        } ${imgLoaded ? s.loaded : s.loading}`}
+                        className={`${s.post__image} ${
+                            imgLoaded ? s.loaded : s.loading
+                        }`}
                         onLoad={() => setImgLoaded(true)}
                     />
                 </div>

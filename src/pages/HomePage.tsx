@@ -13,6 +13,7 @@ const HomePage = () => {
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.post.isLoading);
     const posts = useAppSelector((state) => state.post.posts);
+    const postErrTxt = useAppSelector((state) => state.post.postErrTxt);
     const popularPosts = useAppSelector((state) => state.post.popularPosts);
     const pageQty = useAppSelector((state) => state.post.pageQty);
     const postsRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,9 @@ const HomePage = () => {
         }
     }, [dispatch, pageNumber]);
 
+    if (postErrTxt) {
+        return <div>{postErrTxt && <div>{postErrTxt}</div>}</div>;
+    }
     return (
         <div>
             {isLoading && <Spinner />}
@@ -55,6 +59,7 @@ const HomePage = () => {
             {popularPosts.length > 0 && (
                 <PopularPosts popularPosts={popularPosts} />
             )}
+
             {posts.length > 0 && (
                 <>
                     <div ref={postsRef}>

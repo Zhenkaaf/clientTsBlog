@@ -1,7 +1,7 @@
-.login {
+.verify {
 }
 
-.login__form {
+.verify__form {
     background-color: var(--color-card-bg);
     display: flex;
     flex-direction: column;
@@ -11,14 +11,24 @@
     width: 100%;
     margin: 0 auto;
 }
-.login__title {
+
+.verify__title {
     font-size: 32px;
     text-align: center;
 }
-.login__passwordWrapper {
-    position: relative;
+
+.verify__desc {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
-.login__input {
+
+.verify__timer {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.verify__input {
     font-family: var(--font-main);
     padding: 10px;
     background-color: transparent;
@@ -34,23 +44,21 @@
     box-shadow: none;
     width: 100%;
 }
-.login__passwordWrapper .login__input {
-    padding-right: 45px;
-}
-.login__input::selection {
+
+.verify__input::selection {
     background-color: var(--color-header-bg);
 }
-.login__input:focus {
+.verify__input:focus {
     border-color: var(--color-button);
 }
-.login__input:-webkit-autofill {
+.verify__input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px var(--color-card-bg) inset !important;
     -webkit-text-fill-color: var(--color-primary) !important;
     border: 1px solid var(--color-button) !important;
     border-radius: 0 !important;
 }
 
-.login__button {
+.verify__button {
     background-color: var(--color-button);
     padding: 10px;
     color: var(--color-primary);
@@ -60,49 +68,39 @@
     transition-duration: 0.3s;
     cursor: pointer;
 }
-.login__togglePassword {
-    background: none;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    color: var(--color-border);
-    position: absolute;
-    right: 12px;
-    bottom: 9px;
-    width: 24px;
-    height: 24px;
-}
 @media (hover: hover) {
-    .login__button:hover {
+    .verify__button:hover {
         background-color: var(--color-btn-hover);
     }
 }
-
-.login__button:disabled {
+.verify__button:disabled {
     background-color: var(--color-placeholder);
     cursor: not-allowed;
 }
-.login__footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
 
-.login__link {
-    color: var(--color-button);
-    transition-duration: 0.3s;
-}
-.login__link:hover {
-    text-decoration: underline;
-}
-.login__error {
+.verify__error {
     color: #ff4d4d;
     font-size: 14px;
     margin-top: -15px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     overflow: hidden;
+}
+
+.verify__expired {
+    color: red;
+    text-align: center;
+}
+
+.verify__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.verify__link {
+    color: var(--color-button);
+}
+.verify__link:hover {
+    text-decoration: underline;
 }

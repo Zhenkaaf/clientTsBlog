@@ -149,9 +149,18 @@ const LoginPage = () => {
                 </button>
 
                 <div className={s.login__footer}>
-                    <p> Do not have an account yet?</p>
+                    <p>Do not have an account yet?</p>
                     <Link to="/register" className={`${s.login__link} link`}>
                         Register
+                    </Link>
+                </div>
+                <div className={s.login__footer}>
+                    <p>Forgot your password?</p>
+                    <Link
+                        to="/reset-password"
+                        className={`${s.login__link} link`}
+                    >
+                        Reset password
                     </Link>
                 </div>
             </form>

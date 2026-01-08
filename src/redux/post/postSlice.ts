@@ -89,7 +89,8 @@ const updatePostById = createAsyncThunk<
             return res.data;
         } catch (err: unknown) {
             console.error("update post error", err);
-            const errorMessage = "Failed to update post. Please try later";
+            const errorMessage =
+                "Failed to update post. Please try again later";
             return rejectWithValue(handleError(err, errorMessage, dispatch));
         }
     }
@@ -121,7 +122,7 @@ const getMyPosts = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("get my posts error", err);
-        const errorMessage = "Get my posts failed. Please try to later";
+        const errorMessage = "Get my posts failed. Please try again later";
         return rejectWithValue(handleError(err, errorMessage, dispatch));
     }
 });
@@ -139,7 +140,8 @@ const getPosts = createAsyncThunk<
         return res.data;
     } catch (err: unknown) {
         console.error("get posts error", err);
-        const errorMessage = "Get posts failed. Please try to later";
+        const errorMessage =
+            "Please refresh the page a few times. We are currently experiencing temporary issues with the server or database";
         return rejectWithValue(handleError(err, errorMessage));
     }
 });
@@ -223,6 +225,7 @@ const postSlice = createSlice({
             })
             .addCase(getPosts.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.postErrTxt = null;
                 state.posts = action.payload.posts;
                 state.popularPosts = action.payload.popularPosts;
                 state.pageQty = action.payload.totalPages;

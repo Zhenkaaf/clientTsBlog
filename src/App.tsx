@@ -10,6 +10,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import useInitProfile from "./hooks.ts/useInitProfile";
 import MyPostsPage from "./pages/MyPostsPage";
 import PostPage from "./pages/PostPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import VerifyCodePage from "./pages/VerifyCodePage";
+import NewPasswordPage from "./pages/NewPasswordPage";
 
 function App() {
     useInitProfile();
@@ -28,6 +31,9 @@ function App() {
                 />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
+                <Route path="/reset-password" element={<ResetPasswordPage />} />
+                <Route path="/verify-code" element={<VerifyCodePage />} />
+                <Route path="/new-password" element={<NewPasswordPage />} />
                 <Route path="post/:id" element={<PostPage />} />
                 <Route
                     path="create-post"

@@ -58,6 +58,7 @@ const RegisterPage = () => {
                     className={s.register__input}
                     {...register("email", {
                         required: "This field is required",
+                        maxLength: { value: 254, message: "Email is too long" },
                         pattern: {
                             value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}$/,
                             message: "Enter a valid email address",
@@ -132,8 +133,8 @@ const RegisterPage = () => {
 
                 <div className={s.register__footer}>
                     <p>Already have an account?</p>
-                    <Link to="/login" className={`${s.register__link} link`}>
-                        Login
+                    <Link to="/login" className={s.register__link}>
+                        Log in
                     </Link>
                 </div>
             </form>
