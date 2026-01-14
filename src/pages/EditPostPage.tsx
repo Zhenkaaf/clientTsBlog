@@ -75,7 +75,6 @@ const EditPostPage = () => {
 
     useEffect(() => {
         if (post) {
-            console.log("post received");
             setValue("title", post.title);
             setValue("text", post.text);
             setCrntImgURL(post.imgUrl);
@@ -101,7 +100,7 @@ const EditPostPage = () => {
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
         const file = e.target.files?.[0];
-        console.log(file);
+
         if (!file) {
             setImg(null);
             setNewImgURL(null);

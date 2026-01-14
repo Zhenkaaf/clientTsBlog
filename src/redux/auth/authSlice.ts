@@ -87,7 +87,6 @@ const getProfile = createAsyncThunk<
 >("auth/getProfile", async (_, { rejectWithValue }) => {
     try {
         const res = await myAxios.get<IAuthUserResponse>("/auth/profile");
-        console.log("get profile", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("get profile error", err);
@@ -110,7 +109,6 @@ const authSlice = createSlice({
             state.token = null;
         },
         setAuthToken: (state, action: PayloadAction<{ token: string }>) => {
-            console.log("setAuthToken***", action.payload);
             state.token = action.payload.token;
         },
         setProfileChecked(state) {

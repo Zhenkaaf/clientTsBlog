@@ -15,7 +15,6 @@ const PostPage = () => {
     const { currentPost: post, isLoading } = useAppSelector(
         (state) => state.post
     );
-    console.log(post);
 
     useEffect(() => {
         if (postId) {

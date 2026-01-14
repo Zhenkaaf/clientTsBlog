@@ -36,7 +36,6 @@ const Comments = ({ postId }: ICommentsProps) => {
                     createComment({ commentText, postId })
                 ).unwrap();
                 setCommentText("");
-                console.log(res);
                 toast.success(`${res.message}`);
                 dispatch(getComments(postId));
             } catch (err: any) {

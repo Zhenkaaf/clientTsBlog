@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getErrorMessage } from "../utils/getErrorMessage";
+import { createNewPassword } from "../redux/resetPassword/resetPasswordSlice";
 import toast from "react-hot-toast";
+import Spinner from "../components/Spinner";
 
 interface NewPasswordFormValues {
     password: string;
@@ -11,57 +15,27 @@ interface NewPasswordFormValues {
 }
 
 const NewPasswordPage = () => {
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector((state) => state.resetPassword.isLoading);
     const resetToken = sessionStorage.getItem("resetToken");
     const navigate = useNavigate();
-    //sessionStorage.removeItem("resetToken");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const {
         register,
         handleSubmit,
         watch,
-        reset,
-        clearErrors,
         formState: { errors, isValid },
     } = useForm<NewPasswordFormValues>({ mode: "onBlur" });
     const password = watch("password");
 
-    const handleSetNewPassword = async (formData: NewPasswordFormValues) => {
-        if (!formData.password) {
-            alert("Password is required");
-            return;
-        }
-        if (!resetToken) {
-            alert("Reset token is missing");
-            return;
-        }
-        try {
-            const response = await fetch(
-                /*  "http://localhost:5000/api/auth/create-new-password", */
-                "https://serverexpresstsblog.onrender.com/api/auth/create-new-password",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        newPassword: formData.password,
-                        resetToken,
-                    }),
-                }
-            );
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || "Error");
-            toast.success(data.message);
-            navigate("/login");
-        } catch (err: any) {
-            console.error("New password request error:", err);
-            toast.error("Failed to create new password");
-        }
-    };
-
     if (!resetToken) {
         return (
             <>
-                <div>Access denied. Please request a new password reset.</div>
+                <div>
+                    You don’t have permission to create a new password. Please
+                    start the password reset process again
+                </div>
                 <br />
                 <Link
                     to="/reset-password"
@@ -73,10 +47,27 @@ const NewPasswordPage = () => {
         );
     }
 
+    const handleCreateNewPassword = async (formData: NewPasswordFormValues) => {
+        try {
+            const data = await dispatch(
+                createNewPassword({
+                    newPassword: formData.password,
+                    resetToken,
+                })
+            ).unwrap();
+            toast.success(data.message);
+            navigate("/login");
+        } catch (err) {
+            console.error("New password request error:", err);
+            toast.error(getErrorMessage(err, "Failed to create new password"));
+        }
+    };
+
     return (
         <div className={s.register}>
+            {isLoading && <Spinner />}
             <form
-                onSubmit={handleSubmit(handleSetNewPassword)}
+                onSubmit={handleSubmit(handleCreateNewPassword)}
                 className={s.register__form}
             >
                 <h3 className={s.register__title}>Create new password</h3>
@@ -144,7 +135,7 @@ const NewPasswordPage = () => {
                         })}
                         onInput={(e) => {
                             const input = e.target as HTMLInputElement;
-                            input.value = input.value.replace(/\s/g, ""); // Убираем все пробелы
+                            input.value = input.value.replace(/\s/g, "");
                         }}
                     />
 
@@ -170,7 +161,7 @@ const NewPasswordPage = () => {
                 <button
                     className={s.register__button}
                     type="submit"
-                    disabled={!isValid /* || isLoading */}
+                    disabled={!isValid || isLoading}
                 >
                     Create new password
                 </button>

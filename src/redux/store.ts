@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupAxiosInterceptors } from "../api/axios";
 import authReducer from "./auth/authSlice";
 import postReducer from "./post/postSlice";
 import commentReducer from "./comment/commentSlice";
-import { setupAxiosInterceptors } from "../api/axios";
+import resetPasswordReducer from "./resetPassword/resetPasswordSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         post: postReducer,
         comment: commentReducer,
+        resetPassword: resetPasswordReducer,
     },
 });
 

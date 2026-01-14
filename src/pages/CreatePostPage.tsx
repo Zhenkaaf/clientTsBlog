@@ -31,7 +31,6 @@ const CreatePostPage = () => {
     ) => {
         const file = e.target.files?.[0];
 
-        // Проверка на наличие файла
         if (!file) {
             setImg(null);
             setImgURL(null);
@@ -87,8 +86,7 @@ const CreatePostPage = () => {
                 formData.append("image", img);
                 formData.append("title", data.title);
                 formData.append("text", data.text);
-                const post = await dispatch(createPost(formData)).unwrap();
-                console.log("Ответ от сервера:", post);
+                await dispatch(createPost(formData));
                 setImgURL(null);
                 setImg(null);
                 reset();
@@ -173,25 +171,6 @@ const CreatePostPage = () => {
                 <label className="visuallyHidden" htmlFor="text">
                     text
                 </label>
-                {/* <textarea
-                        id="text"
-                        placeholder="Write your story"
-                        className={s.createPost__textarea}
-                        rows={8}
-                        {...register("text", {
-                            required: "This field is required",
-                            minLength: {
-                                value: 10,
-                                message: "Minimum 10 characters required",
-                            },
-                        })}
-                        onBlur={(e) => {
-                            const trimmed = e.target.value.trim();
-                            setValue("text", trimmed, {
-                                shouldValidate: true,
-                            });
-                        }}
-                    /> */}
                 <MDEditor
                     className={s.createPost__customEditor}
                     value={watch("text")}

@@ -10,7 +10,6 @@ import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 
 const useInitProfile = () => {
-    console.log("useInitProfile");
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -19,7 +18,7 @@ const useInitProfile = () => {
         if (token) {
             try {
                 const decodedToken: { exp: number } = jwtDecode(token);
-                const currentTime = Date.now() / 1000; // Текущее время в секундах
+                const currentTime = Date.now() / 1000;
 
                 if (decodedToken.exp < currentTime) {
                     // Токен просрочен на клиенте
@@ -51,7 +50,6 @@ const useInitProfile = () => {
             dispatch(getProfile());
         } else {
             // Когда токена НЕТ в localStorage
-            console.log("No token in localStorage during init.");
             dispatch(setProfileChecked()); // Говорим, что проверка профиля завершена (пользователь не авторизован)
         }
     }, [dispatch]);

@@ -11,7 +11,12 @@ export const Layout = () => {
             <div className="main">
                 <div className="container">
                     <Outlet />
-                    <Toaster position="bottom-right" />
+                    <Toaster
+                        position="bottom-right"
+                        toastOptions={{
+                            duration: 5000,
+                        }}
+                    />
                 </div>
             </div>
 

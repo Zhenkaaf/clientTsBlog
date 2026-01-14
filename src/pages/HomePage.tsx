@@ -41,8 +41,9 @@ const HomePage = () => {
     }, [dispatch, pageNumber]);
 
     if (postErrTxt) {
-        return <div>{postErrTxt && <div>{postErrTxt}</div>}</div>;
+        return <div>{postErrTxt}</div>;
     }
+
     return (
         <div>
             {isLoading && <Spinner />}

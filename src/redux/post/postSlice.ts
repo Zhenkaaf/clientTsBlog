@@ -118,7 +118,6 @@ const getMyPosts = createAsyncThunk<
 >("post/getMyPosts", async (_, { rejectWithValue, dispatch }) => {
     try {
         const res = await myAxios.get("/post/my-posts");
-        console.log("get my posts", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("get my posts error", err);
@@ -136,12 +135,11 @@ const getPosts = createAsyncThunk<
         const res = await myAxios.get("/post/posts", {
             params: { page: pageNumber },
         });
-        console.log("get posts", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("get posts error", err);
         const errorMessage =
-            "Please refresh the page a few times. We are currently experiencing temporary issues with the server or database";
+            "Please refresh the page a few times to wake up server and database";
         return rejectWithValue(handleError(err, errorMessage));
     }
 });
@@ -250,8 +248,7 @@ const postSlice = createSlice({
             .addCase(delPostById.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(delPostById.fulfilled, (state, action) => {
-                console.log(action);
+            .addCase(delPostById.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isFetchedMyPosts = false;
             })

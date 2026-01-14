@@ -10,7 +10,6 @@ const CustomPagination = ({
     pageNumber,
     setPageNumber,
 }: ICustomPaginationProps) => {
-    console.log("pageNumber", pageNumber);
     return (
         <div className="container">
             <Stack alignItems="center" mt={4}>
