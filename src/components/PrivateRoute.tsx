@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode";
 import { logout } from "../redux/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import toast from "react-hot-toast";
-import Spinner from "./Spinner";
 
 interface IPrivateRouteProps {
     children: JSX.Element;
@@ -45,7 +44,6 @@ const PrivateRoute = ({ children }: IPrivateRouteProps) => {
 
     // Если профиль еще проверяется — показываем загрузчик (или null)
     if (!isProfileChecked) {
-        /*  <Spinner />; */
         return null; // Или можно вернуть какой-то загрузчик/спиннер
     }
 
