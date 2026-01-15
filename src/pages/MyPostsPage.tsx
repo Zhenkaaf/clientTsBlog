@@ -1,10 +1,10 @@
+import s from "./MyPostsPage.module.css";
+import Posts from "../components/Posts";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { getMyPosts } from "../redux/post/postSlice";
-import Posts from "../components/Posts";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import s from "./MyPostsPage.module.css";
 
 const MyPostsPage = () => {
     const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import s from "./TypingText.module.css";
+import { useState, useEffect } from "react";
 
 interface TypingTextProps {
     texts: string[];

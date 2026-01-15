@@ -1,10 +1,10 @@
+import s from "./PostPage.module.css";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useEffect } from "react";
 import { clearCurrentPost, getPostById } from "../redux/post/postSlice";
-import Spinner from "../components/Spinner";
-import s from "./PostPage.module.css";
 import { formatDate } from "../utils/formatDate";
+import Spinner from "../components/Spinner";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeRaw from "rehype-raw";
 import Comments from "../components/Comments";

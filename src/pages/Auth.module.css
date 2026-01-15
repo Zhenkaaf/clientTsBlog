@@ -1,7 +1,7 @@
-.login {
+.auth {
 }
 
-.login__form {
+.auth__form {
     background-color: var(--color-card-bg);
     display: flex;
     flex-direction: column;
@@ -11,14 +11,14 @@
     width: 100%;
     margin: 0 auto;
 }
-.login__title {
+.auth__title {
     font-size: 32px;
     text-align: center;
 }
-.login__passwordWrapper {
+.auth__passwordWrapper {
     position: relative;
 }
-.login__input {
+.auth__input {
     font-family: var(--font-main);
     padding: 10px;
     background-color: transparent;
@@ -34,23 +34,23 @@
     box-shadow: none;
     width: 100%;
 }
-.login__passwordWrapper .login__input {
+.auth__passwordWrapper .login__input {
     padding-right: 45px;
 }
-.login__input::selection {
+.auth__input::selection {
     background-color: var(--color-header-bg);
 }
-.login__input:focus {
+.auth__input:focus {
     border-color: var(--color-button);
 }
-.login__input:-webkit-autofill {
+.auth__input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px var(--color-card-bg) inset !important;
     -webkit-text-fill-color: var(--color-primary) !important;
     border: 1px solid var(--color-button) !important;
     border-radius: 0 !important;
 }
 
-.login__button {
+.auth__button {
     background-color: var(--color-button);
     padding: 10px;
     color: var(--color-primary);
@@ -60,7 +60,7 @@
     transition-duration: 0.3s;
     cursor: pointer;
 }
-.login__togglePassword {
+.auth__togglePassword {
     background: none;
     border: none;
     outline: none;
@@ -74,31 +74,31 @@
     width: 24px;
     height: 24px;
 }
+
 @media (hover: hover) {
-    .login__button:hover {
+    .auth__button:hover {
         background-color: var(--color-btn-hover);
     }
 }
 
-.login__button:disabled {
+.auth__button:disabled {
     background-color: var(--color-placeholder);
     cursor: not-allowed;
 }
-.login__footer {
+.auth__footer {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
 
-.login__link {
+.auth__link {
     color: var(--color-button);
-    transition-duration: 0.3s;
 }
-.login__link:hover {
+.auth__link:hover {
     text-decoration: underline;
 }
-.login__error {
+.auth__error {
     color: #ff4d4d;
     font-size: 14px;
     margin-top: -15px;

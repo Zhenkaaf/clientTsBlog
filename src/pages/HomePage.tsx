@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getPosts } from "../redux/post/postSlice";
+import { useLocation } from "react-router-dom";
 import PopularPosts from "../components/PopularPosts";
 import Posts from "../components/Posts";
 import TypingText from "../components/TypingText";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { getPosts } from "../redux/post/postSlice";
 import Spinner from "../components/Spinner";
 import CustomPagination from "../components/CustomPagination";
-import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
     const { search } = useLocation();

@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import s from "./Comments.module.css";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
     clearComments,
@@ -8,7 +9,7 @@ import {
 } from "../redux/comment/commentSlice";
 import Spinner from "./Spinner";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface ICommentsProps {
     postId: string | undefined;
@@ -36,11 +37,11 @@ const Comments = ({ postId }: ICommentsProps) => {
                     createComment({ commentText, postId })
                 ).unwrap();
                 setCommentText("");
-                toast.success(`${res.message}`);
+                toast.success(res.message);
                 dispatch(getComments(postId));
-            } catch (err: any) {
+            } catch (err) {
                 console.error("Failed to add comment", err);
-                toast.error(err);
+                toast.error(getErrorMessage(err));
             }
         }
     };

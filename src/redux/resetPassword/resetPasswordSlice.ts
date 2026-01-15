@@ -20,6 +20,7 @@ const sendResetCode = createAsyncThunk<
                 email,
             }
         );
+        console.log("Response from sendResetCode:", res.data);
         return res.data;
     } catch (err: unknown) {
         console.error("Send reset code error", err);

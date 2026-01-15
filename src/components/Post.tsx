@@ -9,6 +9,7 @@ import { IPostResponse } from "../types";
 import toast from "react-hot-toast";
 import Modal from "./Modal";
 import removeMarkdown from "remove-markdown";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface IPostProps {
     post: IPostResponse;
@@ -27,9 +28,9 @@ const Post = ({ post, isOwnerView }: IPostProps) => {
         try {
             const data = await dispatch(delPostById(post._id)).unwrap();
             toast.success(data.message);
-        } catch (err: any) {
-            console.error("Error:", err);
-            toast.error(err);
+        } catch (err) {
+            console.error("Post Error:", err);
+            toast.error(getErrorMessage(err));
         } finally {
             setIsLoading(false);
             setIsDeleteModalOpen(false);

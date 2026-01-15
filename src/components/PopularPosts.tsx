@@ -1,6 +1,6 @@
+import s from "./PopularPosts.module.css";
 import { Eye, MoveRight } from "lucide-react";
 import { IPostResponse } from "../types";
-import s from "./PopularPosts.module.css";
 import { Link } from "react-router-dom";
 
 interface IPostsProps {

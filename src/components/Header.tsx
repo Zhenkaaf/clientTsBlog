@@ -1,12 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
 import s from "./Header.module.css";
+import { Link, NavLink } from "react-router-dom";
+import { clearMyPosts } from "../redux/post/postSlice";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { logout } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import Modal from "./Modal";
-import { clearMyPosts } from "../redux/post/postSlice";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,4 +1,4 @@
-import s from "./RegisterPage.module.css";
+import s from "./Auth.module.css";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -37,10 +37,7 @@ const NewPasswordPage = () => {
                     start the password reset process again
                 </div>
                 <br />
-                <Link
-                    to="/reset-password"
-                    className={`${s.register__link} link`}
-                >
+                <Link to="/reset-password" className={`${s.auth__link} link`}>
                     Reset password
                 </Link>
             </>
@@ -64,15 +61,15 @@ const NewPasswordPage = () => {
     };
 
     return (
-        <div className={s.register}>
+        <div className={s.auth}>
             {isLoading && <Spinner />}
             <form
                 onSubmit={handleSubmit(handleCreateNewPassword)}
-                className={s.register__form}
+                className={s.auth__form}
             >
-                <h3 className={s.register__title}>Create new password</h3>
+                <h3 className={s.auth__title}>Create new password</h3>
 
-                <div className={s.register__passwordWrapper}>
+                <div className={s.auth__passwordWrapper}>
                     <label className="visuallyHidden" htmlFor="password">
                         password
                     </label>
@@ -80,7 +77,7 @@ const NewPasswordPage = () => {
                         type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Password"
-                        className={s.register__input}
+                        className={s.auth__input}
                         {...register("password", {
                             required: "This field is required",
                             minLength: {
@@ -104,7 +101,7 @@ const NewPasswordPage = () => {
 
                     <button
                         type="button"
-                        className={s.register__togglePassword}
+                        className={s.auth__togglePassword}
                         onClick={() => setShowPassword((prev) => !prev)}
                         aria-label={
                             showPassword ? "Hide password" : "Show password"
@@ -114,12 +111,12 @@ const NewPasswordPage = () => {
                     </button>
                 </div>
                 {errors?.password && (
-                    <p className={s.register__error}>
+                    <p className={s.auth__error}>
                         {errors.password?.message || "Please check the field"}
                     </p>
                 )}
 
-                <div className={s.register__passwordWrapper}>
+                <div className={s.auth__passwordWrapper}>
                     <label className="visuallyHidden" htmlFor="confirmPassword">
                         confirmPassword
                     </label>
@@ -127,7 +124,7 @@ const NewPasswordPage = () => {
                         type={showConfirmPassword ? "text" : "password"}
                         id="confirmPassword"
                         placeholder="Confirm password"
-                        className={s.register__input}
+                        className={s.auth__input}
                         {...register("confirmPassword", {
                             required: "This field is required",
                             validate: (value) =>
@@ -141,7 +138,7 @@ const NewPasswordPage = () => {
 
                     <button
                         type="button"
-                        className={s.register__togglePassword}
+                        className={s.auth__togglePassword}
                         onClick={() => setShowConfirmPassword((prev) => !prev)}
                         aria-label={
                             showConfirmPassword
@@ -153,13 +150,13 @@ const NewPasswordPage = () => {
                     </button>
                 </div>
                 {errors?.confirmPassword && (
-                    <p className={s.register__error}>
+                    <p className={s.auth__error}>
                         {errors.confirmPassword?.message ||
                             "Please check the field"}
                     </p>
                 )}
                 <button
-                    className={s.register__button}
+                    className={s.auth__button}
                     type="submit"
                     disabled={!isValid || isLoading}
                 >

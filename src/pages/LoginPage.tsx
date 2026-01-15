@@ -1,7 +1,6 @@
+import s from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import s from "./LoginPage.module.css";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
     loginUser,
@@ -10,6 +9,8 @@ import {
 } from "../redux/auth/authSlice";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface IFormInputs {
     email: string;
@@ -35,11 +36,11 @@ const LoginPage = () => {
     const processFormData = async (data: IFormInputs) => {
         try {
             const res = await dispatch(loginUser(data)).unwrap();
-            toast.success(`${res.message}`);
+            toast.success(res.message);
             reset();
             navigate("/my-posts");
-        } catch (err: any) {
-            toast.error(err[Object.keys(err)[0]]);
+        } catch (err) {
+            toast.error(getErrorMessage(err));
             console.error("Login error:", err);
         }
     };
@@ -49,12 +50,12 @@ const LoginPage = () => {
         };
     }, [dispatch]);
     return (
-        <section className={s.login}>
+        <section className={s.auth}>
             <form
                 onSubmit={handleSubmit(processFormData)}
-                className={s.login__form}
+                className={s.auth__form}
             >
-                <h3 className={s.login__title}>Login</h3>
+                <h3 className={s.auth__title}>Login</h3>
                 <label className="visuallyHidden" htmlFor="email">
                     email
                 </label>
@@ -62,7 +63,7 @@ const LoginPage = () => {
                     type="email"
                     id="email"
                     placeholder="Email"
-                    className={s.login__input}
+                    className={s.auth__input}
                     {...register("email", {
                         required: "This field is required",
                         pattern: {
@@ -78,14 +79,14 @@ const LoginPage = () => {
                     })}
                 />
                 {(errors?.email || emailErrTxt) && (
-                    <p className={s.login__error}>
+                    <p className={s.auth__error}>
                         {errors.email?.message ||
                             emailErrTxt ||
                             "Please check the field"}
                     </p>
                 )}
 
-                <div className={s.login__passwordWrapper}>
+                <div className={s.auth__passwordWrapper}>
                     <label className="visuallyHidden" htmlFor="password">
                         password
                     </label>
@@ -93,7 +94,7 @@ const LoginPage = () => {
                         type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Password"
-                        className={s.login__input}
+                        className={s.auth__input}
                         {...register("password", {
                             required: "This field is required",
                             minLength: {
@@ -123,7 +124,7 @@ const LoginPage = () => {
 
                     <button
                         type="button"
-                        className={s.login__togglePassword}
+                        className={s.auth__togglePassword}
                         onClick={() => setShowPassword((prev) => !prev)}
                         aria-label={
                             showPassword ? "Hide password" : "Show password"
@@ -133,7 +134,7 @@ const LoginPage = () => {
                     </button>
                 </div>
                 {(errors?.password || passwordErrTxt) && (
-                    <p className={s.login__error}>
+                    <p className={s.auth__error}>
                         {errors.password?.message ||
                             passwordErrTxt ||
                             "Please check the field"}
@@ -141,24 +142,24 @@ const LoginPage = () => {
                 )}
 
                 <button
-                    className={s.login__button}
+                    className={s.auth__button}
                     type="submit"
                     disabled={!isValid || isLoading}
                 >
                     Login
                 </button>
 
-                <div className={s.login__footer}>
+                <div className={s.auth__footer}>
                     <p>Do not have an account yet?</p>
-                    <Link to="/register" className={`${s.login__link} link`}>
+                    <Link to="/register" className={`${s.auth__link} link`}>
                         Register
                     </Link>
                 </div>
-                <div className={s.login__footer}>
+                <div className={s.auth__footer}>
                     <p>Forgot your password?</p>
                     <Link
                         to="/reset-password"
-                        className={`${s.login__link} link`}
+                        className={`${s.auth__link} link`}
                     >
                         Reset password
                     </Link>

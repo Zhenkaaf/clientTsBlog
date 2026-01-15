@@ -1,11 +1,11 @@
+import s from "./CreatePostPage.module.css";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createPost } from "../redux/post/postSlice";
-import s from "./CreatePostPage.module.css";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Spinner from "../components/Spinner";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import {
     bold,
@@ -13,6 +13,7 @@ import {
     strikethrough,
     link,
 } from "@uiw/react-md-editor/commands";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface IFormInputs {
     title: string;
@@ -95,9 +96,9 @@ const CreatePostPage = () => {
             } else {
                 throw new Error("No image selected");
             }
-        } catch (err: any) {
-            console.error("Error:", err);
-            toast.error(err);
+        } catch (err) {
+            console.error("Create post Error:", err);
+            toast.error(getErrorMessage(err));
         }
     };
 

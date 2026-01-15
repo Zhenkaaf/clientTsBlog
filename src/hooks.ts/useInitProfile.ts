@@ -21,10 +21,10 @@ const useInitProfile = () => {
                 const currentTime = Date.now() / 1000;
 
                 if (decodedToken.exp < currentTime) {
-                    // Токен просрочен на клиенте
+                    /*  Токен просрочен на клиенте
                     console.log(
                         "Token expired on client side during init. Clearing and skipping profile fetch."
-                    );
+                    ); */
                     dispatch(logout()); // Вызываем logout, чтобы очистить все
                     localStorage.removeItem("tokenAutovibe");
                     toast.error(

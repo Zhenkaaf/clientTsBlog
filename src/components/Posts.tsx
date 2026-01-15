@@ -1,6 +1,6 @@
+import s from "./Posts.module.css";
 import { IPostResponse } from "../types";
 import Post from "./Post";
-import s from "./Posts.module.css";
 
 interface IPostsProps {
     title: string;
