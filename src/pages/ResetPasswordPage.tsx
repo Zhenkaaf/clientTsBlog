@@ -48,7 +48,11 @@ const ResetPasswordPage = () => {
             );
             localStorage.setItem("reset_email", formData.email);
             startTimer();
-            navigate("/verify-code", { state: { email: formData.email } });
+            navigate(
+                `/verify-code?email=${encodeURIComponent(formData.email)}`
+            );
+
+            //navigate("/verify-code", { state: { email: formData.email } });
         } catch (err) {
             console.error("Reset password request error:", err);
             toast.error(

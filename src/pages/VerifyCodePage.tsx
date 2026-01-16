@@ -17,11 +17,10 @@ type VerifyCodeFormValues = {
 const VerifyCodePage = () => {
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.resetPassword.isLoading);
-    const location = useLocation();
     const navigate = useNavigate();
+    const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const queryEmail = query.get("email");
-    const email = location.state?.email || queryEmail || "";
+    const email = query.get("email");
     const [serverError, setServerError] = useState<string | null>(null);
     const { timeLeft, isTimerActive, clearTimer } = usePersistentTimer();
 
@@ -39,6 +38,11 @@ const VerifyCodePage = () => {
 
     const submitCode = async (formData: VerifyCodeFormValues) => {
         const code = formData.code;
+        if (!email) {
+            toast.error("Email is missing. Please request a reset code again.");
+            navigate("/reset-password");
+            return;
+        }
         try {
             const data = await dispatch(verifyCode({ code, email })).unwrap();
             toast.success(data.message);
